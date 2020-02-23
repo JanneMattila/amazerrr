@@ -16,10 +16,10 @@ namespace Amazerrr.Tests
         {
             // Arrange
             var expected =
-                "######\n" +
-                "#....#\n" +
-                "####.#\n" +
-                "#o...#\n" +
+                "######\r\n" +
+                "#....#\r\n" +
+                "####.#\r\n" +
+                "#o...#\r\n" +
                 "######";
 
             // Act
