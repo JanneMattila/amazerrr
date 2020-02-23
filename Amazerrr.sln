@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29521.150
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{97624CD0-BD0B-403C-B499-9724A09AD24C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{9CB54895-EC32-4CFA-9646-087510914471}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{C06EC622-C5D7-48DB-B209-2D4F2242A040}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{06C2DE8C-7FEC-4159-A745-402893845099}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit", "unit", "{ADC62612-0711-4A51-87F6-67C20649C705}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "release", "release", "{F73115DC-5E29-402D-A8E2-5CFEE6589FDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amazerrr", "src\Amazerrr\Amazerrr.csproj", "{9769EF88-5453-44F5-8889-04FB2D0970CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9769EF88-5453-44F5-8889-04FB2D0970CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9769EF88-5453-44F5-8889-04FB2D0970CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9769EF88-5453-44F5-8889-04FB2D0970CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9769EF88-5453-44F5-8889-04FB2D0970CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ADC62612-0711-4A51-87F6-67C20649C705} = {06C2DE8C-7FEC-4159-A745-402893845099}
+		{F73115DC-5E29-402D-A8E2-5CFEE6589FDF} = {06C2DE8C-7FEC-4159-A745-402893845099}
+		{9769EF88-5453-44F5-8889-04FB2D0970CF} = {97624CD0-BD0B-403C-B499-9724A09AD24C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7116710A-7D27-4B61-BF4E-1B2F966352A2}
+	EndGlobalSection
+EndGlobal
