@@ -7,14 +7,8 @@ namespace Amazerrr
     public class Solver
     {
         private int _minimumMoveCount = int.MaxValue;
-        private int _totalCount;
 
-        public List<Swipe> Solve(string input)
-        {
-            return ScanSolution();
-        }
-
-        private List<Swipe> ScanSolution()
+        public List<Swipe> Solve(Board board)
         {
             var recursionLevel = 1;
             var checkpoints = new List<SolveSnapshot>()
@@ -60,7 +54,7 @@ namespace Amazerrr
                     continue;
                 }
 
-                if (solve.Count == _totalCount)
+                if (solve.Count == board.TotalCount)
                 {
                     if (solve.Swipes.Count < _minimumMoveCount)
                     {
@@ -70,9 +64,9 @@ namespace Amazerrr
                     continue;
                 }
 
-                foreach (var move in moves)
+                foreach (var move in board.Moves[solve.Position.ToString()])
                 {
-                    // TODO: Make move
+                    // TODO: Make move.
                 }
             }
 
