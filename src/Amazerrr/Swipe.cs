@@ -1,6 +1,6 @@
 ﻿namespace Amazerrr
 {
-    public enum Move
+    public enum Swipe
     {
         Up,
         Down,

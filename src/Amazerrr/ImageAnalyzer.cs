@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Amazerrr
 {
@@ -17,13 +15,6 @@ namespace Amazerrr
         private List<ImagePosition> _board;
         private int _width;
         private int _height;
-
-        class ImagePosition
-        {
-            public int X { get; set; }
-            public int Y { get; set; }
-            public bool IsPlayer { get; set; }
-        }
 
         public string Analyze(byte[] imageData)
         {

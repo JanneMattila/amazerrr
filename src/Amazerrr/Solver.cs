@@ -6,36 +6,15 @@ namespace Amazerrr
 {
     public class Solver
     {
-        class SolveSnapshot
-        {
-            public int Level { get; set; }
-            public int Count { get; set; }
-            public List<Move> Moves { get; set; }
-
-            public string UniqueString
-            {
-                get
-                {
-                    // TODO: Add consolidation identifier.
-                    return Guid.NewGuid().ToString();
-                }
-            }
-
-            public SolveSnapshot()
-            {
-                Moves = new List<Move>();
-            }
-        }
-
         private int _minimumMoveCount = int.MaxValue;
         private int _totalCount;
 
-        public List<Move> Solve(string input)
+        public List<Swipe> Solve(string input)
         {
             return ScanSolution();
         }
 
-        private List<Move> ScanSolution()
+        private List<Swipe> ScanSolution()
         {
             var recursionLevel = 1;
             var checkpoints = new List<SolveSnapshot>()
@@ -43,12 +22,12 @@ namespace Amazerrr
                 new SolveSnapshot() { Level = recursionLevel }
             };
 
-            var moves = new List<Move>()
+            var moves = new List<Swipe>()
             {
-                Move.Up, Move.Down, Move.Left, Move.Right
+                Swipe.Up, Swipe.Down, Swipe.Left, Swipe.Right
             };
 
-            List<Move> solution = null;
+            List<Swipe> solution = null;
             while (true)
             {
                 var solve = checkpoints.FirstOrDefault(c => c.Level == recursionLevel);
@@ -76,17 +55,17 @@ namespace Amazerrr
                 }
 
                 checkpoints.Remove(solve);
-                if (solve.Moves.Count > _minimumMoveCount)
+                if (solve.Swipes.Count > _minimumMoveCount)
                 {
                     continue;
                 }
 
                 if (solve.Count == _totalCount)
                 {
-                    if (solve.Moves.Count < _minimumMoveCount)
+                    if (solve.Swipes.Count < _minimumMoveCount)
                     {
-                        _minimumMoveCount = solve.Moves.Count;
-                        solution = solve.Moves.ToList();
+                        _minimumMoveCount = solve.Swipes.Count;
+                        solution = solve.Swipes.ToList();
                     }
                     continue;
                 }

@@ -22,9 +22,9 @@ namespace Amazerrr.Tests
                 "####.#\r\n" +
                 "#o...#\r\n" +
                 "######";
-            var expected = new List<Move>()
+            var expected = new List<Swipe>()
             {
-                Move.Right, Move.Up, Move.Left
+                Swipe.Right, Swipe.Up, Swipe.Left
             };
 
             // Act
