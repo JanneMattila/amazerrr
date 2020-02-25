@@ -1,0 +1,6 @@
+@endpoint = http://localhost:7071
+
+### Post test image
+POST {{endpoint}}/api/ImageAnalyzer HTTP/1.1
+
+< ./../test/unit/Amazerrr.Tests/Resources/Test1.png
