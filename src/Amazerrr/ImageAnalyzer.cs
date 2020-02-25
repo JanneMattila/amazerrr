@@ -123,36 +123,36 @@ namespace Amazerrr
             // Header line
             for (int x = smallestX; x <= largestX + 2; x++)
             {
-                sb.Append(ImageAnalyzerConstants.Wall);
+                sb.Append(Constants.Wall);
             }
             sb.AppendLine();
 
             for (int y = smallestY; y <= largestY; y++)
             {
-                sb.Append(ImageAnalyzerConstants.Wall);
+                sb.Append(Constants.Wall);
                 for (int x = smallestX; x <= largestX; x++)
                 {
                     var b = _board.FirstOrDefault(b => b.X == x && b.Y == y);
                     if (b == null)
                     {
-                        sb.Append(ImageAnalyzerConstants.Wall);
+                        sb.Append(Constants.Wall);
                     }
                     else if (b.IsPlayer)
                     {
-                        sb.Append(ImageAnalyzerConstants.Player);
+                        sb.Append(Constants.Player);
                     }
                     else
                     {
-                        sb.Append(ImageAnalyzerConstants.Corridor);
+                        sb.Append(Constants.Corridor);
                     }
                 }
-                sb.AppendLine(ImageAnalyzerConstants.Wall);
+                sb.AppendLine(Constants.Wall.ToString());
             }
 
             // Footer line
             for (int x = smallestX; x <= largestX + 2; x++)
             {
-                sb.Append(ImageAnalyzerConstants.Wall);
+                sb.Append(Constants.Wall);
             }
             sb.AppendLine();
             return sb.ToString();
