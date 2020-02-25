@@ -7,7 +7,7 @@ namespace Amazerrr
     public class Parser
     {
         private Board _board = new Board();
-        private HashSet<string> _positions = new HashSet<string>();
+        private HashSet<int> _positions = new HashSet<int>();
         private HashSet<string> _scannedPaths = new HashSet<string>();
         private char[,] _map;
         private int _height;
@@ -17,23 +17,22 @@ namespace Amazerrr
         {
             var lines = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
             (int x, int y) = FindPlayer(lines);
-            _board.StartPosition = new Point(x, y);
+            _board.StartPosition = new Position(x, y);
 
-            FindMoves(x, y, -1, 0);
-            FindMoves(x, y, 1, 0);
-            FindMoves(x, y, 0, -1);
-            FindMoves(x, y, 0, 1);
+            FindMoves(new Position(x, y), -1, 0, Swipe.Left);
+            FindMoves(new Position(x, y), 1, 0, Swipe.Right);
+            FindMoves(new Position(x, y), 0, -1, Swipe.Up);
+            FindMoves(new Position(x, y), 0, 1, Swipe.Down);
 
             _board.TotalCount = _positions.Count;
             return _board;
         }
 
-        private void FindMoves(int x, int y, int xdelta, int ydelta)
+        private void FindMoves(Position position, int xdelta, int ydelta, Swipe swipe)
         {
-            var startx = x;
-            var starty = y;
-            var startkey = $"{x},{y}";
-            var scankey = $"{x},{y},{xdelta},{ydelta}";
+            var startPosition = position.Clone();
+            var startkey = position.ToKey();
+            var scankey = $"{startkey},{xdelta},{ydelta}";
             if (_scannedPaths.Contains(scankey))
             {
                 // We have previously already scanned to this direction.
@@ -41,15 +40,20 @@ namespace Amazerrr
             }
 
             _scannedPaths.Add(scankey);
+            var locations = new HashSet<int>
+            {
+                startkey
+            };
+
             while (true)
             {
-                var newx = x + xdelta;
-                var newy = y + ydelta;
+                var newx = position.X + xdelta;
+                var newy = position.Y + ydelta;
 
                 var c = _map[newx, newy];
                 if (c == Constants.Wall)
                 {
-                    if (startx == x && starty == y)
+                    if (startPosition == position)
                     {
                         // No move available in this direction.
                         return;
@@ -57,8 +61,9 @@ namespace Amazerrr
 
                     var move = new Move()
                     {
-                        From = new Point(startx, starty),
-                        To = new Point(x, y)
+                        To = position,
+                        Swipe = swipe,
+                        Locations = locations
                     };
 
                     if (_board.Moves.ContainsKey(startkey))
@@ -73,18 +78,19 @@ namespace Amazerrr
                         });
                     }
 
-                    FindMoves(x, y, -1, 0);
-                    FindMoves(x, y, 1, 0);
-                    FindMoves(x, y, 0, -1);
-                    FindMoves(x, y, 0, 1);
+                    FindMoves(position.Clone(), -1, 0, Swipe.Left);
+                    FindMoves(position.Clone(), 1, 0, Swipe.Right);
+                    FindMoves(position.Clone(), 0, -1, Swipe.Up);
+                    FindMoves(position.Clone(), 0, 1, Swipe.Down);
                     return;
                 }
 
-                var key = $"{x},{y}";
+                var key = position.ToKey();
                 _positions.Add(key);
+                locations.Add(startkey);
 
-                x = newx;
-                y = newy;
+                position.X = newx;
+                position.Y = newy;
             }
         }
 

@@ -14,7 +14,7 @@ namespace Amazerrr.Tests
         }
 
         [Fact]
-        public void Analyze_Test1_File()
+        public void Parse_Test1_File()
         {
             // Arrange
             var input =

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace Amazerrr
 {
     class SolveSnapshot
     {
         public int Level { get; set; }
-        public Point Position { get; set; }
-        public int Count { get; set; }
+        public Position Position { get; set; }
+        public HashSet<int> VisitedLocations { get; set; }
         public List<Swipe> Swipes { get; set; }
 
         public string UniqueString
@@ -23,6 +22,7 @@ namespace Amazerrr
         public SolveSnapshot()
         {
             Swipes = new List<Swipe>();
+            VisitedLocations = new HashSet<int>();
         }
     }
 }
