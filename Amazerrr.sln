@@ -29,6 +29,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{AFDA2978-8523-47EB-AC59-501B28ADAFAF}"
 	ProjectSection(SolutionItems) = preProject
 		doc\functions.http = doc\functions.http
+		doc\Test1.txt = doc\Test1.txt
 	EndProjectSection
 EndProject
 Global
