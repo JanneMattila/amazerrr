@@ -52,7 +52,7 @@ namespace Amazerrr
                 }
 
                 checkpoints.Remove(solve);
-                if (solve.Swipes.Count > _minimumMoveCount)
+                if (solve.Swipes.Count >= _minimumMoveCount)
                 {
                     continue;
                 }
