@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace Amazerrr
@@ -14,9 +13,9 @@ namespace Amazerrr
             var recursionLevel = 1;
             var checkpoints = new List<SolveSnapshot>()
             {
-                new SolveSnapshot() 
-                { 
-                    Level = recursionLevel, 
+                new SolveSnapshot()
+                {
+                    Level = recursionLevel,
                     Position = board.StartPosition
                 }
             };

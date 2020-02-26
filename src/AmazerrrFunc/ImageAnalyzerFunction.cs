@@ -1,10 +1,10 @@
+using System.IO;
 using Amazerrr;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using System.IO;
 
 namespace AmazerrrFunc
 {
@@ -27,7 +27,7 @@ namespace AmazerrrFunc
             {
                 return new BadRequestObjectResult("Too large content. Try with smaller image.");
             }
-            
+
             using var reader = new BinaryReader(req.Body);
             var imageData = reader.ReadBytes((int)req.ContentLength.Value);
 

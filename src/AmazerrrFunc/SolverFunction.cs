@@ -1,11 +1,11 @@
+using System.IO;
+using System.Threading.Tasks;
 using Amazerrr;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace AmazerrrFunc
 {
@@ -17,7 +17,7 @@ namespace AmazerrrFunc
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-            
+
             using var reader = new StreamReader(req.Body);
             var input = await reader.ReadToEndAsync();
 

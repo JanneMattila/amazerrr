@@ -180,7 +180,9 @@ namespace Amazerrr
 
             _board.Add(new ImagePosition()
             {
-                X = x, Y = y, IsPlayer = argb != BoardInnerColor
+                X = x,
+                Y = y,
+                IsPlayer = argb != BoardInnerColor
             });
             FindBoard(bitmap, pixelX + _width, pixelY, x + 1, y);
             FindBoard(bitmap, pixelX - _width, pixelY, x - 1, y);
