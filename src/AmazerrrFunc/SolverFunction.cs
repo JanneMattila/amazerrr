@@ -1,4 +1,5 @@
-using System.IO;
+﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Amazerrr;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +28,7 @@ namespace AmazerrrFunc
             var solver = new Solver();
             var output = solver.Solve(board);
 
-            return new OkObjectResult(output);
+            return new OkObjectResult(output.Select(o => o.ToString()));
         }
     }
 }
