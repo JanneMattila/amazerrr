@@ -2,7 +2,7 @@
 
 namespace Amazerrr
 {
-    public class Position
+    public class Position : IEquatable<Position>
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -34,14 +34,43 @@ namespace Amazerrr
 
         public override bool Equals(object obj)
         {
-            if (obj == null || GetType() != obj.GetType())
+            return Equals(obj as Position);
+        }
+
+        public bool Equals(Position other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            if (this.GetType() != other.GetType())
             {
                 return false;
             }
 
-            Position other = (Position)obj;
-            return (X == other.X) && (Y == other.Y);
+            return X == other.X &&
+                   Y == other.Y;
         }
+
+        public static bool operator ==(Position lhs, Position rhs)
+        {
+            if (ReferenceEquals(lhs, null))
+            {
+                if (ReferenceEquals(rhs, null))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator !=(Position left, Position right) => !(left == right);
 
         public override int GetHashCode()
         {

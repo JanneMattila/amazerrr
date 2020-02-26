@@ -16,11 +16,11 @@ namespace Amazerrr.Tests
         {
             // Arrange
             var expected =
-                "######\r\n" +
-                "#....#\r\n" +
-                "####.#\r\n" +
-                "#o...#\r\n" +
-                "######";
+                "WWWWWW\r\n" +
+                "W....W\r\n" +
+                "WWWW.W\r\n" +
+                "Wo...W\r\n" +
+                "WWWWWW";
 
             // Act
             var actual = _imageAnalyzer.Analyze(Resources.Test1);

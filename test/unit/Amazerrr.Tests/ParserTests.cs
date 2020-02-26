@@ -17,11 +17,11 @@ namespace Amazerrr.Tests
         {
             // Arrange
             var input =
-                "######\r\n" +
-                "#....#\r\n" +
-                "####.#\r\n" +
-                "#o...#\r\n" +
-                "######";
+                "WWWWWW\r\n" +
+                "W....W\r\n" +
+                "WWWW.W\r\n" +
+                "Wo...W\r\n" +
+                "WWWWWW";
             var expected = 9;
             var expectedStartPosition = new Point(1, 3);
 

@@ -86,7 +86,7 @@ namespace Amazerrr
 
                 var key = position.ToKey();
                 _positions.Add(key);
-                locations.Add(startkey);
+                locations.Add(key);
 
                 position.X = newx;
                 position.Y = newy;

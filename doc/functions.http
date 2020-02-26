@@ -6,11 +6,15 @@ POST {{endpoint}}/api/ImageAnalyzer HTTP/1.1
 < ./../test/unit/Amazerrr.Tests/Resources/Test1.png
 
 ### Post test file
-#   ######
-#   #....#
-#   ####.#
-#   #o...#
-#   ######
 POST {{endpoint}}/api/Solver HTTP/1.1
 
 < ./Test1.txt
+
+### Post test
+POST {{endpoint}}/api/Solver HTTP/1.1
+
+WWWWWW
+W....W
+WWWW.W
+Wo...W
+WWWWWW
