@@ -19,8 +19,32 @@ namespace AmazerrrFunc
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            using var reader = new StreamReader(req.Body);
-            var input = await reader.ReadToEndAsync();
+            string input;
+
+            if (req.ContentType.Contains("text/plain"))
+            {
+                using var reader = new StreamReader(req.Body);
+                input = await reader.ReadToEndAsync();
+            }
+            else
+            {
+                if (!req.ContentLength.HasValue)
+                {
+                    return new BadRequestObjectResult("Content-Length is required header.");
+                }
+
+                const int maxSize = 10_000_000;
+                if (req.ContentLength.Value > maxSize)
+                {
+                    return new BadRequestObjectResult("Too large content. Try with smaller image.");
+                }
+
+                using var reader = new BinaryReader(req.Body);
+                var imageData = reader.ReadBytes((int)req.ContentLength.Value);
+
+                var imageAnalyzer = new ImageAnalyzer();
+                input = imageAnalyzer.Analyze(imageData);
+            }
 
             var parser = new Parser();
             var board = parser.Parse(input);
