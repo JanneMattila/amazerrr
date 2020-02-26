@@ -39,6 +39,7 @@ namespace Amazerrr
             }
 
             _scannedPaths.Add(scankey);
+            _positions.Add(startkey);
             var locations = new HashSet<int>
             {
                 startkey
@@ -84,12 +85,12 @@ namespace Amazerrr
                     return;
                 }
 
+                position.X = newx;
+                position.Y = newy;
+
                 var key = position.ToKey();
                 _positions.Add(key);
                 locations.Add(key);
-
-                position.X = newx;
-                position.Y = newy;
             }
         }
 
