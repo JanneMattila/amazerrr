@@ -5,72 +5,67 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <style type="text/css">
+        html,
+        body {
+            padding-top: 0px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            font-family: 'Segoe UI Light', sans-serif;
+            text-align: left;
+            margin: 0 auto;
+            width: 800px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        img {
+            margin: 0px auto;
+            display: block;
+        }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@aspnet/signalr@1.1.4/dist/browser/signalr.js"></script>
 
     <script>
         let endpoint = "http://localhost:7071";
-        let configurationUrl = endpoint + "/api/configurations";
-        let signalRUrl = endpoint + "/api/negotiate";
-        let configurations = [];
+        let solverUrl = endpoint + "/api/Solver";
 
-        fetch(configurationUrl)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                configurations = data;
-                startSignalR();
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-        function newMessage(msg) {
-            console.log(msg);
-        }
-
-        function startSignalR() {
-            fetch(signalRUrl, { method: "POST" })
+        function uploadFile() {
+            const solutionElement = document.getElementById("solution");
+            solutionElement.innerHTML = "Uploading & Solving...";
+            fetch(solverUrl,
+                {
+                    method: "POST",
+                    body: document.getElementById("puzzle").files[0]
+                })
                 .then(response => {
                     return response.json();
                 })
                 .then(data => {
                     console.log(data);
-                    const options = {
-                        accessTokenFactory: () => data.accessToken
-                    };
-                    const connection = new signalR.HubConnectionBuilder()
-                        .withUrl(data.url, options)
-                        .configureLogging(signalR.LogLevel.Information)
-                        .build();
-                    connection.on('newMessage', newMessage);
-                    connection.onclose(() => console.log('disconnected'));
-                    console.log('connecting...');
-                    connection.start()
-                        .then(() => console.log('connected!'))
-                        .catch(console.error);
+                    solutionElement.innerHTML = `Solution in ${data.length} moves:`;
+                    for (let i = 0; i < data.length; i++) {
+                        var swipe = data[i];
+                        solutionElement.innerHTML += "<br />" + swipe;
+                    }
                 })
                 .catch(error => {
                     console.log(error);
-                })
+                });
         }
 
         </script>
-    <style>
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            overflow: hidden;
-            font-family: segoeui;
-        }
-    </style>
 </head>
 <body>
-    <div id="placeholder"></div>
+    <h1>
+        Amazerrr
+    </h1>
+
+    <div>
+        <input type="file" id="puzzle" value="" />
+    </div>
+    <input type="button" value="Pick a file and solve it!" onclick="uploadFile();" />
+
+    <div id="solution"></div>
 </body>
 </html>
