@@ -2,32 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "signalRServicePricingTier": {
-      "type": "string",
-      "allowedValues": [
-        "Free_F1",
-        "Standard_S1"
-      ],
-      "metadata": {
-        "description": "SignalR Service Pricing tier. Check details at https://azure.microsoft.com/en-us/pricing/details/signalr-service/"
-      }
-    },
-    "signalRServiceUnits": {
-      "type": "int",
-      "minValue": 1,
-      "allowedValues": [
-        1,
-        2,
-        5,
-        10,
-        20,
-        50,
-        100
-      ],
-      "metadata": {
-        "description": "SignalR Service unit count"
-      }
-    },
     "storageType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -51,7 +25,6 @@
     "appName": "amazerrr",
     "webStorageName": "[concat('amzrweb', uniqueString(resourceGroup().id))]",
     "appInsightsName": "[concat('ai-',variables('appName'))]",
-    "appSignalRName": "[concat('sr-', uniqueString(resourceGroup().id))]",
     "appStorageName": "[concat('amzr', uniqueString(resourceGroup().id))]",
     "appServiceName": "[concat('azfun-',variables('appName'),'-',uniqueString(resourceGroup().id))]",
     "appServicePlanName": "[concat('azappplan-', variables('appName'))]"
@@ -96,25 +69,6 @@
       "properties": {
         "Application_Type": "web",
         "applicationId": "[resourceId('Microsoft.Web/sites', variables('appServiceName'))]"
-      }
-    },
-    {
-      "name": "[variables('appSignalRName')]",
-      "type": "Microsoft.SignalRService/SignalR",
-      "location": "[parameters('location')]",
-      "apiVersion": "2018-10-01",
-      "sku": {
-        "name": "[parameters('signalRServicePricingTier')]",
-        "capacity": "[parameters('signalRServiceUnits')]"
-      },
-      "properties": {
-        "hostNamePrefix": "[variables('appSignalRName')]",
-        "features": [
-          {
-            "flag": "ServiceMode",
-            "value": "Serverless"
-          }
-        ]
       }
     },
     {
@@ -195,7 +149,6 @@
         "AzureWebJobsDisableHomepage": "true",
         "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('appStorageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('appStorageName')), '2018-02-01').keys[0].value)]",
         "StorageConnectionString": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('appStorageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('appStorageName')), '2018-02-01').keys[0].value)]",
-        "SignalRConnectionString": "[listKeys(resourceId('Microsoft.SignalRService/SignalR', variables('appSignalRName')),'2018-10-01').primaryConnectionString]",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet",
         "FUNCTIONS_EXTENSION_VERSION": "~3",
         "WEBSITE_RUN_FROM_PACKAGE": "1",

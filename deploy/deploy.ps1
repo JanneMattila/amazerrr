@@ -5,14 +5,6 @@ Param (
     [Parameter(HelpMessage="Deployment target resource group location")] 
     [string] $Location = "North Europe",
 
-    [Parameter(HelpMessage="SignalR Pricing tier. Check details at https://azure.microsoft.com/en-us/pricing/details/signalr-service/")] 
-    [ValidateSet("Free_F1", "Standard_S1")]
-    [string] $SignalRServicePricingTier = "Free_F1",
-
-    [Parameter(HelpMessage="SignalR Service unit count")] 
-    [ValidateSet(1, 2, 5, 10, 20, 50, 100)]
-    [int] $SignalRServiceUnits = 1,
-
     [string] $Template = "$PSScriptRoot\azuredeploy.json",
     [string] $TemplateParameters = "$PSScriptRoot\azuredeploy.parameters.json"
 )
@@ -44,8 +36,7 @@ if ((Get-AzResourceGroup -Name $ResourceGroupName -Location $Location -ErrorActi
 
 # Additional parameters that we pass to the template deployment
 $additionalParameters = New-Object -TypeName hashtable
-$additionalParameters['signalRServicePricingTier'] = $SignalRServicePricingTier
-$additionalParameters['signalRServiceUnits'] = $SignalRServiceUnits
+#$additionalParameters['name'] = $value
 
 $result = New-AzResourceGroupDeployment `
     -DeploymentName $deploymentName `
