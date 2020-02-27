@@ -40,7 +40,7 @@ namespace AmazerrApp
                 var solver = new Solver();
                 var output = solver.Solve(board);
 
-                sb.AppendLine("Solution:");
+                sb.AppendLine($"Solution in {output.Count} moves:");
                 foreach (var item in output)
                 {
                     sb.AppendLine(item.ToString());
