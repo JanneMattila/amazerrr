@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Text;
+using System.Windows;
+using Amazerrr;
 using Microsoft.Win32;
 
 namespace AmazerrApp
@@ -10,8 +13,9 @@ namespace AmazerrApp
             InitializeComponent();
         }
 
-        private void SolveButton_Click(object sender, RoutedEventArgs e)
+        private async void SolveButton_Click(object sender, RoutedEventArgs e)
         {
+            Swipes.Text = string.Empty;
             var openFileDialog = new OpenFileDialog
             {
                 Filter = "Image Files (*.png)|*.PNG|All files (*.*)|*.*"
@@ -20,7 +24,24 @@ namespace AmazerrApp
             var result = openFileDialog.ShowDialog();
             if (result.GetValueOrDefault())
             {
-                Swipes.Text = openFileDialog.FileName;
+                var imageData = await File.ReadAllBytesAsync(openFileDialog.FileName);
+                
+                var imageAnalyzer = new ImageAnalyzer();
+                var input = imageAnalyzer.Analyze(imageData);
+
+                var parser = new Parser();
+                var board = parser.Parse(input);
+
+                var solver = new Solver();
+                var output = solver.Solve(board);
+
+                var sb = new StringBuilder();
+                foreach (var item in output)
+                {
+                    sb.AppendLine(item.ToString());
+                }
+
+                Swipes.Text = sb.ToString();
             }
         }
     }

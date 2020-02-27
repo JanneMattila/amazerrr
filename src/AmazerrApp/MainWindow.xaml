@@ -5,10 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AmazerrApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Amazerrr" Height="480" Width="620" WindowStyle="ThreeDBorderWindow">
     <Grid>
-        <TextBox x:Name="BackendAddress" HorizontalAlignment="Left" Margin="10,10,0,0" Text="http://localhost:7071" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" FontSize="24" />
-        <Button x:Name="SolveButton" Content="Solve" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" FontSize="24" Click="SolveButton_Click" Width="100" />
-        <TextBox x:Name="Swipes" HorizontalAlignment="Left" Margin="10,111,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="600"  FontSize="24" Height="313" />
+        <Button x:Name="SolveButton" Content="Pick a file and solve it!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="24" Click="SolveButton_Click" Width="580" />
+        <TextBox x:Name="Swipes" HorizontalAlignment="Left" Margin="10,65,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" FontSize="24" Height="350" />
     </Grid>
 </Window>
