@@ -5,9 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AmazerrApp"
         mc:Ignorable="d"
-        Title="Amazerrr" Height="480" Width="620" WindowStyle="ThreeDBorderWindow">
-    <Grid>
-        <Button x:Name="SolveButton" Content="Pick a file and solve it!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="24" Click="SolveButton_Click" Width="580" />
-        <TextBox x:Name="Swipes" HorizontalAlignment="Left" Margin="10,65,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" FontSize="24" Height="350" />
+        Title="Amazerrr" Height="480" Width="620" WindowStyle="ThreeDBorderWindow" FontFamily="Consolas">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <Button x:Name="SolveButton" Content="Pick a file and solve it!" FontSize="24" Click="SolveButton_Click" />
+        <TextBox Grid.Row="1" x:Name="Swipes" FontSize="24" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
     </Grid>
 </Window>

@@ -24,10 +24,15 @@ namespace AmazerrApp
             var result = openFileDialog.ShowDialog();
             if (result.GetValueOrDefault())
             {
+                var sb = new StringBuilder();
                 var imageData = await File.ReadAllBytesAsync(openFileDialog.FileName);
                 
                 var imageAnalyzer = new ImageAnalyzer();
                 var input = imageAnalyzer.Analyze(imageData);
+
+                sb.AppendLine("Board:");
+                sb.AppendLine(input);
+                sb.AppendLine();
 
                 var parser = new Parser();
                 var board = parser.Parse(input);
@@ -35,7 +40,7 @@ namespace AmazerrApp
                 var solver = new Solver();
                 var output = solver.Solve(board);
 
-                var sb = new StringBuilder();
+                sb.AppendLine("Solution:");
                 foreach (var item in output)
                 {
                     sb.AppendLine(item.ToString());
