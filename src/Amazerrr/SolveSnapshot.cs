@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
 
 namespace Amazerrr
@@ -14,8 +14,8 @@ namespace Amazerrr
         {
             get
             {
-                // TODO: Add consolidation identifier.
-                return Guid.NewGuid().ToString();
+                var s = Position.ToKey() + "," + string.Join(",", VisitedLocations.Select(s => s).OrderBy(s => s));
+                return s;
             }
         }
 
