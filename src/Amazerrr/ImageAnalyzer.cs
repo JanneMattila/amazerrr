@@ -13,8 +13,7 @@ namespace Amazerrr
         private const int BoardInnerColor = -13684945;
 
         private List<ImagePosition> _board;
-        private int _width;
-        private int _height;
+        private Rectangle _rectangle;
 
         public string Analyze(byte[] imageData)
         {
@@ -28,20 +27,55 @@ namespace Amazerrr
             // Finding the inner board
             while (true)
             {
-                var c = bitmap.GetPixel(topX, topY);
-                if (c.ToArgb() == BoardInnerColor)
+                var c = GetPixel(bitmap, topX, topY);
+                if (!c.HasValue || c.Value.ToArgb() == BoardInnerColor)
                 {
                     break;
                 }
                 topY++;
             }
 
-            // Finding the left side of board square
-            var leftX = topX;
+            (_rectangle, _) = FindRectangle(bitmap, topX, topY);
+            FindBoard(bitmap, topX, topY, 0, 0);
+
+            return CreateGrid();
+        }
+
+        private static Color? GetPixel(Bitmap bitmap, int x, int y)
+        {
+            if (x < 0 || y < 0 || x >= bitmap.Width || y >= bitmap.Height)
+            {
+                return null;
+            }
+            return bitmap.GetPixel(x, y);
+        }
+
+        private static (Rectangle, Color) FindRectangle(Bitmap bitmap, int x, int y)
+        {
+            int leftX;
+            int rightX;
+            int bottomY;
+            int topY;
+            Color color = GetPixel(bitmap, x, y).GetValueOrDefault();
+
+            // Finding the top side of board square
+            topY = y;
             while (true)
             {
-                var c = bitmap.GetPixel(leftX, topY);
-                if (c.ToArgb() != BoardInnerColor)
+                var c = GetPixel(bitmap, x, topY);
+                if (!c.HasValue || c.Value.ToArgb() != BoardInnerColor)
+                {
+                    break;
+                }
+                topY--;
+            }
+
+            // Finding the left side of board square
+            leftX = x;
+            while (true)
+            {
+                var c = GetPixel(bitmap, leftX, y);
+                if (!c.HasValue || c.Value.ToArgb() != BoardInnerColor)
                 {
                     break;
                 }
@@ -49,35 +83,23 @@ namespace Amazerrr
             }
 
             // Finding the right side of board square
-            var rightX = topX;
+            rightX = x;
             while (true)
             {
-                var c = bitmap.GetPixel(rightX, topY);
-                if (c.ToArgb() != BoardInnerColor)
+                var c = GetPixel(bitmap, rightX, y);
+                if (!c.HasValue || c.Value.ToArgb() != BoardInnerColor)
                 {
                     break;
                 }
                 rightX++;
             }
 
-            // Finding the border width
-            var border = 0;
-            while (true)
-            {
-                var c = bitmap.GetPixel(rightX + border, topY);
-                if (c.ToArgb() == BoardInnerColor)
-                {
-                    break;
-                }
-                border++;
-            }
-
             // Finding the bottom side of board square
-            var bottomY = topY;
+            bottomY = y;
             while (true)
             {
-                var c = bitmap.GetPixel(topX, bottomY);
-                if (c.ToArgb() != BoardInnerColor)
+                var c = GetPixel(bitmap, x, bottomY);
+                if (!c.HasValue || c.Value.ToArgb() != BoardInnerColor)
                 {
                     break;
                 }
@@ -85,12 +107,8 @@ namespace Amazerrr
                 bottomY++;
             }
 
-            _width = rightX - leftX + border;
-            _height = bottomY - topY + border;
-
-            FindBoard(bitmap, leftX + _width / 2, topY + _height / 3, 0, 0);
-
-            return CreateGrid();
+            var rectangle = new Rectangle(leftX + 1, topY + 1, rightX - leftX, bottomY - topY);
+            return (rectangle, color);
         }
 
         private string CreateGrid()
@@ -158,21 +176,36 @@ namespace Amazerrr
             return sb.ToString();
         }
 
-        private void FindBoard(Bitmap bitmap, int pixelX, int pixelY, int x, int y)
+        private void FindBoard(Bitmap bitmap, int pixelX, int pixelY, int boardX, int boardY)
         {
-            if (_board.Any(b => b.X == x && b.Y == y))
+            if (_board.Any(b => b.X == boardX && b.Y == boardY))
             {
                 return;
             }
 
-            if (pixelX < 0 || pixelY < 0 ||
-                pixelX >= bitmap.Width || pixelY >= bitmap.Height)
+            const int minSize = 10;
+            (var rectangle, var color) = FindRectangle(bitmap, pixelX, pixelY);
+            if (rectangle.X < 0 || rectangle.Y < 0 ||
+                rectangle.Right >= bitmap.Width || 
+                rectangle.Bottom >= bitmap.Height ||
+                rectangle.Width < minSize || rectangle.Height < minSize)
             {
-                return;
+                var centerColor = color.ToArgb();
+                if (centerColor == WhiteColor || 
+                    centerColor == BoardOuterColor ||
+                    centerColor == 0)
+                {
+                    // Out from board
+                    return;
+                }
+                else
+                {
+                    rectangle = new Rectangle(pixelX - _rectangle.Width / 2, pixelY - _rectangle.Height / 2, _rectangle.Width, _rectangle.Height);
+                }
             }
 
-            var c = bitmap.GetPixel(pixelX, pixelY);
-            var argb = c.ToArgb();
+            var c = GetPixel(bitmap, rectangle.X + rectangle.Width / 2, rectangle.Y + rectangle.Height / 2);
+            var argb = c.Value.ToArgb();
             if (argb == WhiteColor || argb == BoardOuterColor)
             {
                 return;
@@ -180,14 +213,18 @@ namespace Amazerrr
 
             _board.Add(new ImagePosition()
             {
-                X = x,
-                Y = y,
+                X = boardX,
+                Y = boardY,
+                Rectangle = rectangle,
                 IsPlayer = argb != BoardInnerColor
             });
-            FindBoard(bitmap, pixelX + _width, pixelY, x + 1, y);
-            FindBoard(bitmap, pixelX - _width, pixelY, x - 1, y);
-            FindBoard(bitmap, pixelX, pixelY + _height, x, y + 1);
-            FindBoard(bitmap, pixelX, pixelY - _height, x, y - 1);
+
+            var xcenter = rectangle.X + rectangle.Width / 2;
+            var ycenter = rectangle.Y + rectangle.Height / 2;
+            FindBoard(bitmap, xcenter + rectangle.Width, ycenter, boardX + 1, boardY);
+            FindBoard(bitmap, xcenter - rectangle.Width, ycenter, boardX - 1, boardY);
+            FindBoard(bitmap, xcenter, ycenter + rectangle.Height, boardX, boardY + 1);
+            FindBoard(bitmap, xcenter, ycenter - rectangle.Height, boardX, boardY - 1);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Amazerrr.Tests
                 "W....W\r\n" +
                 "WWWW.W\r\n" +
                 "Wo...W\r\n" +
-                "WWWWWW";
+                "WWWWWW\r\n";
 
             // Act
             var actual = _imageAnalyzer.Analyze(Resources.Test1);
