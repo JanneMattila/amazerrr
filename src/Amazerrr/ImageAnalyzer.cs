@@ -204,6 +204,13 @@ namespace Amazerrr
                 }
             }
 
+            if (_rectangle.Height < rectangle.Height)
+            {
+                // Some rectangles can be partly visible. 
+                // For move estimation use the "larger" rectangle size.
+                _rectangle = rectangle;
+            }
+
             var c = GetPixel(bitmap, rectangle.X + rectangle.Width / 2, rectangle.Y + rectangle.Height / 2);
             var argb = c.Value.ToArgb();
             if (argb == WhiteColor || argb == BoardOuterColor)
