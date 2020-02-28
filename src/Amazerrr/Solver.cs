@@ -108,7 +108,7 @@ namespace Amazerrr
                         Position = move.To,
                         Swipes = swipes,
                         VisitedLocations = visitedLocations,
-                        PreviousMoveBlocked = availableMovesCount <= 2
+                        PreviousMoveBlocked = availableMovesCount <= 1
                     };
 
                     checkpoints.Add(newsolve);

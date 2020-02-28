@@ -1,7 +1,8 @@
 {
   "profiles": {
     "AmazerrrConsole": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\j18matti\\Pictures\\Amazerrr\\09 Screenshot_20200228-215122.png\""
     }
   }
 }
