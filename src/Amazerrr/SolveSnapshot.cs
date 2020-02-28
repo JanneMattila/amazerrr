@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Amazerrr
 {
@@ -15,8 +16,7 @@ namespace Amazerrr
         {
             get
             {
-                var s = string.Join(",", VisitedLocations.Select(s => s).OrderBy(s => s));
-                return s;
+                return $"{Position.ToKey()},{string.Join(",", VisitedLocations.Select(s => s).OrderBy(s => s))}";
             }
         }
 
