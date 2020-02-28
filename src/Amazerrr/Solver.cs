@@ -44,9 +44,12 @@ namespace Amazerrr
 
                     if (begin > end)
                     {
-                        Console.WriteLine($"Reduced calculation from {begin} to {end}.");
+                        Console.WriteLine($"{recursionLevel}: Reduced calculation from {begin} to {end}.");
                     }
-
+                    else
+                    {
+                        Console.WriteLine($"{recursionLevel}: Calculating {begin}...");
+                    }
                     recursionLevel++;
                     continue;
                 }
@@ -68,8 +71,28 @@ namespace Amazerrr
                 }
 
                 var positionKey = solve.Position.ToKey();
+                var availableMovesCount = board.Moves[positionKey].Count;
+                var blockSwipe = Swipe.None;
+
+                if (solve.PreviousMoveBlocked)
+                {
+                    blockSwipe = solve.Swipes.Last() switch
+                    {
+                        Swipe.Up => Swipe.Down,
+                        Swipe.Down => Swipe.Up,
+                        Swipe.Left => Swipe.Right,
+                        Swipe.Right => Swipe.Left,
+                        _ => Swipe.None
+                    };
+                }
+
                 foreach (var move in board.Moves[positionKey])
                 {
+                    if (blockSwipe == move.Swipe)
+                    {
+                        continue;
+                    }
+
                     var swipes = solve.Swipes.ToList();
                     swipes.Add(move.Swipe);
 
@@ -84,7 +107,8 @@ namespace Amazerrr
                         Level = solve.Level + 1,
                         Position = move.To,
                         Swipes = swipes,
-                        VisitedLocations = visitedLocations
+                        VisitedLocations = visitedLocations,
+                        PreviousMoveBlocked = availableMovesCount <= 2
                     };
 
                     checkpoints.Add(newsolve);

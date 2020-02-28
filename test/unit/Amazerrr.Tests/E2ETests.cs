@@ -44,5 +44,36 @@ namespace Amazerrr.Tests
             // Assert
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void Complex_Board_Test()
+        {
+            // Arrange
+            var input =
+                "WWWWWWWWWW\r\n" +
+                "W........W\r\n" +
+                "W.WW.W...W\r\n" +
+                "W.WW.W.WWW\r\n" +
+                "W........W\r\n" +
+                "WWWW.W.W.W\r\n" +
+                "WW.....W.W\r\n" +
+                "WW.WoWWW.W\r\n" +
+                "WW.W.WWW.W\r\n" +
+                "W........W\r\n" +
+                "W....WW.WW\r\n" +
+                "W.WW.WW.WW\r\n" +
+                "W........W\r\n" +
+                "WWWWWWW..W\r\n" +
+                "WWWWWWWWWW";
+
+            var expected = 23;
+            var board = _parser.Parse(input);
+
+            // Act
+            var actual = _solver.Solve(board);
+
+            // Assert
+            Assert.Equal(expected, actual.Count);
+        }
     }
 }

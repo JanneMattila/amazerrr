@@ -9,12 +9,13 @@ namespace Amazerrr
         public Position Position { get; set; }
         public HashSet<int> VisitedLocations { get; set; }
         public List<Swipe> Swipes { get; set; }
+        public bool PreviousMoveBlocked { get; set; }
 
         public string UniqueString
         {
             get
             {
-                var s = Position.ToKey() + "," + string.Join(",", VisitedLocations.Select(s => s).OrderBy(s => s));
+                var s = string.Join(",", VisitedLocations.Select(s => s).OrderBy(s => s));
                 return s;
             }
         }
