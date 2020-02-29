@@ -42,10 +42,10 @@ stages:
               azurePowerShellVersion: LatestVersion
           
           - task: AzureRmWebAppDeployment@4
-              displayName: 'Deploy Azure Functions App'
-              inputs:
-                azureSubscription: AzureDevSubscription
-                appType: functionApp
-                WebAppName: '$(Custom.WebAppName)'
-                enableCustomDeployment: true
-                DeploymentType: runFromZip
+            displayName: 'Deploy Azure Functions App'
+            inputs:
+              azureSubscription: AzureDevSubscription
+              appType: functionApp
+              WebAppName: '$(Custom.WebAppName)'
+              enableCustomDeployment: true
+              DeploymentType: runFromZip
