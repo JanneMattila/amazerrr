@@ -17,7 +17,7 @@ $ErrorActionPreference = "Stop"
 $date = (Get-Date).ToString("yyyy-MM-dd-HH-mm-ss")
 $deploymentName = "Local-$date"
 
-if ([string]::IsNullOrEmpty($env:BUILD_BUILDID))
+if ([string]::IsNullOrEmpty($env:BUILD_BUILDNUMBER))
 {
     Write-Host (@"
 Not executing inside Azure DevOps Release Management.
@@ -28,7 +28,7 @@ so that script continues to work correctly for you.
 }
 else
 {
-    $deploymentName = $env:BUILD_BUILDID
+    $deploymentName = $env:BUILD_BUILDNUMBER
 }
 
 if ($null -eq (Get-AzResourceGroup -Name $ResourceGroupName -Location $Location -ErrorAction SilentlyContinue))
