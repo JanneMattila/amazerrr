@@ -46,7 +46,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazerrrWeb", "src\Amazerrr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazerrApp", "src\AmazerrApp\AmazerrApp.csproj", "{853FD610-318B-443C-B6A6-91DABB116EFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazerrrConsole", "src\AmazerrrConsole\AmazerrrConsole.csproj", "{457B917F-1F23-47F6-9288-28BF0F202EE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmazerrrConsole", "src\AmazerrrConsole\AmazerrrConsole.csproj", "{457B917F-1F23-47F6-9288-28BF0F202EE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{0F3D56DC-DA36-46E5-AF8C-9A43345A1319}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{639178D8-17FC-41F3-B05E-CCB27B68F520}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +99,8 @@ Global
 		{D68E6751-4B00-491B-997D-923F316EC30A} = {97624CD0-BD0B-403C-B499-9724A09AD24C}
 		{853FD610-318B-443C-B6A6-91DABB116EFC} = {97624CD0-BD0B-403C-B499-9724A09AD24C}
 		{457B917F-1F23-47F6-9288-28BF0F202EE0} = {97624CD0-BD0B-403C-B499-9724A09AD24C}
+		{0F3D56DC-DA36-46E5-AF8C-9A43345A1319} = {C06EC622-C5D7-48DB-B209-2D4F2242A040}
+		{639178D8-17FC-41F3-B05E-CCB27B68F520} = {0F3D56DC-DA36-46E5-AF8C-9A43345A1319}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7116710A-7D27-4B61-BF4E-1B2F966352A2}
