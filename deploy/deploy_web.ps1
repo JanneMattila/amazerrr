@@ -47,6 +47,8 @@ Get-ChildItem -File -Recurse $AppRootFolder `
         $name = $_.FullName.Replace($AppRootFolder,"")
         $contentType = GetContentType($_.Extension)
         $properties = @{"ContentType" = $contentType}
+
+        Write-Host "Deploying file: $name"
         Set-AzStorageBlobContent -File $_.FullName -Blob $name -Container `$web -Context $storageAccount.Context -Properties $properties -Force
     }
 

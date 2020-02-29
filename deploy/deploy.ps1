@@ -68,6 +68,14 @@ Enable-AzStorageStaticWebsite -Context $storageAccount.Context -IndexDocument in
 $webStorageUri = $storageAccount.PrimaryEndpoints.Web
 Write-Host "Static website endpoint: $webStorageUri"
 
+# Create table to the storage if it does not exist
+$tableName = "puzzles"
+if ($null -eq (Get-AzStorageTable -Context $storageAccount.Context -Name $tableName -ErrorAction SilentlyContinue))
+{
+    Write-Warning "Table '$tableName' doesn't exist and it will be created."
+    New-AzStorageTable -Context $storageAccount.Context -Name $tableName
+}
+
 # Publish variable to the Azure DevOps agents so that they
 # can be used in follow-up tasks such as application deployment
 Write-Host "##vso[task.setvariable variable=Custom.WebStorageName;]$webStorageName"
