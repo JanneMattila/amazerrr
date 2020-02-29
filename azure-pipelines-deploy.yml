@@ -9,22 +9,28 @@ stages:
   - deployment: Deploy
     displayName: Deploy job
     pool:
-      vmImage: ubuntu-16.04
+      vmImage: ubuntu-latest
     environment: ${{ parameters.environtName }}
     strategy:
       runOnce:
         deploy:
           steps:
           - task: DownloadBuildArtifacts@0
-            displayName: 'Download Build Artifacts'
+            displayName: 'Download Build Artifacts: app'
+            inputs:
+              artifactName: app
+              downloadPath: '$(System.DefaultWorkingDirectory)'
+
+          - task: DownloadBuildArtifacts@0
+            displayName: 'Download Build Artifacts: deploy'
             inputs:
               artifactName: deploy
               downloadPath: '$(System.DefaultWorkingDirectory)'
 
           - task: DownloadBuildArtifacts@0
-            displayName: 'Download Build Artifacts'
+            displayName: 'Download Build Artifacts: web'
             inputs:
-              artifactName: app
+              artifactName: web
               downloadPath: '$(System.DefaultWorkingDirectory)'
           
           - task: AzurePowerShell@4
@@ -32,5 +38,14 @@ stages:
             inputs:
               azureSubscription: AzureDevSubscription
               ScriptPath: '$(System.DefaultWorkingDirectory)/deploy/deploy.ps1'
-              ScriptArguments: '-ResourceGroupName ${{ parameters.resourceGroupName }}'
+              ScriptArguments: '-ResourceGroupName ${{ parameters.resourceGroupName }} -AppRootFolder "$(System.DefaultWorkingDirectory)/web"'
               azurePowerShellVersion: LatestVersion
+          
+          - task: AzureRmWebAppDeployment@4
+              displayName: 'Deploy Azure Functions App'
+              inputs:
+              azureSubscription: AzureSubscription
+              appType: functionApp
+              WebAppName: '$(Custom.WebAppName)'
+              enableCustomDeployment: true
+              DeploymentType: runFromZip

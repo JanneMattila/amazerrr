@@ -70,6 +70,6 @@ stages:
         PathtoPublish: deploy
         ArtifactName: deploy
 
-#- template: azure-pipelines-deploy.yml
-#  parameters:
-#    resourceGroupName: 'rg-amazerr-dev'
+- template: azure-pipelines-deploy.yml
+  parameters:
+    resourceGroupName: 'rg-amazerr-dev'
