@@ -57,7 +57,7 @@ Get-ChildItem -File -Recurse $AppRootFolder `
         {
             # Update the local development to match the deployed Azure Functions url
             $localUri = "http://localhost:7071"
-            Get-Content $_.FullName | `
+            (Get-Content $_.FullName) | `
                 % { $_ -Replace $localUri, $FunctionsUri } | `
                 Set-Content $_.FullName
         }
