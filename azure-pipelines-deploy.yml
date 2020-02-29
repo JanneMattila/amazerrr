@@ -10,7 +10,7 @@ stages:
   - deployment: Deploy
     displayName: Deploy job
     pool:
-      vmImage: ubuntu-latest
+      vmImage: windows-latest
     environment: ${{ parameters.environtName }}
     strategy:
       runOnce:
