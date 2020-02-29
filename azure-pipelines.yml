@@ -72,4 +72,5 @@ stages:
 
 - template: azure-pipelines-deploy.yml
   parameters:
+    environtName: 'Dev'
     resourceGroupName: 'rg-amazerr-dev'

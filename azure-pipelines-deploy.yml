@@ -1,4 +1,5 @@
 parameters:
+  environtName: 'default'
   resourceGroupName: 'rg-amazerrr-default'
 
 stages:
