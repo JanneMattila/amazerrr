@@ -17,7 +17,7 @@ $ErrorActionPreference = "Stop"
 $date = (Get-Date).ToString("yyyy-MM-dd-HH-mm-ss")
 $deploymentName = "Local-$date"
 
-if ([string]::IsNullOrEmpty($env:RELEASE_DEFINITIONNAME))
+if ([string]::IsNullOrEmpty($env:SYSTEM_JOBID))
 {
     Write-Host (@"
 Not executing inside Azure DevOps Release Management.
@@ -28,7 +28,7 @@ so that script continues to work correctly for you.
 }
 else
 {
-    $deploymentName = $env:RELEASE_RELEASENAME
+    $deploymentName = $env:SYSTEM_JOBID
 }
 
 if ($null -eq (Get-AzResourceGroup -Name $ResourceGroupName -Location $Location -ErrorAction SilentlyContinue))
@@ -77,7 +77,7 @@ Write-Host "##vso[task.setvariable variable=Custom.WebAppUri;]$webAppUri"
 
 if (![string]::IsNullOrEmpty($AppRootFolder))
 {
-    $PSScriptRoot\deploy_web.ps1  `
+    . $PSScriptRoot\deploy_web.ps1  `
         -ResourceGroupName $ResourceGroupName  `
         -WebStorageName $storageAccount.StorageAccountName  `
         -AppRootFolder $AppRootFolder
