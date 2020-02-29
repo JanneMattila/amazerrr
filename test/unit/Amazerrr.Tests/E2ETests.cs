@@ -66,7 +66,7 @@ namespace Amazerrr.Tests
                 "WWWWWWW..W\r\n" +
                 "WWWWWWWWWW";
 
-            var expected = 23;
+            var expected = 20;
             var board = _parser.Parse(input);
 
             // Act
