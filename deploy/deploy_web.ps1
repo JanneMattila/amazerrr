@@ -36,6 +36,8 @@ function GetContentType([string] $extension)
     return "text/plain"
 }
 
+Write-Host "Processing folder: $AppRootFolder"
+
 if ($AppRootFolder.EndsWith("\") -eq $false)
 {
     $AppRootFolder += "\"
