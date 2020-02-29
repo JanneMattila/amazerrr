@@ -39,8 +39,7 @@ stages:
             inputs:
               azureSubscription: AzureDevSubscription
               ScriptPath: '$(System.DefaultWorkingDirectory)/deploy/deploy.ps1'
-              ScriptArguments: '-ResourceGroupName ${{ parameters.resourceGroupName }} -AppRootFolder "../web/"'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/deploy'
+              ScriptArguments: '-ResourceGroupName ${{ parameters.resourceGroupName }} -AppRootFolder "$(System.DefaultWorkingDirectory)/web/"'
               azurePowerShellVersion: LatestVersion
           
           - task: AzureRmWebAppDeployment@4
