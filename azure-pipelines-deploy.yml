@@ -1,0 +1,36 @@
+parameters:
+  resourceGroupName: 'rg-amazerrr-default'
+
+stages:
+- stage: ${{ parameters.environtName }}
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy job
+    pool:
+      vmImage: ubuntu-16.04
+    environment: ${{ parameters.environtName }}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadBuildArtifacts@0
+            displayName: 'Download Build Artifacts'
+            inputs:
+              artifactName: deploy
+              downloadPath: '$(System.DefaultWorkingDirectory)'
+
+          - task: DownloadBuildArtifacts@0
+            displayName: 'Download Build Artifacts'
+            inputs:
+              artifactName: app
+              downloadPath: '$(System.DefaultWorkingDirectory)'
+          
+          - task: AzurePowerShell@4
+            displayName: 'Azure PowerShell script: FilePath'
+            inputs:
+              azureSubscription: AzureDevSubscription
+              ScriptPath: '$(System.DefaultWorkingDirectory)/deploy/deploy.ps1'
+              ScriptArguments: '-ResourceGroupName ${{ parameters.resourceGroupName }}'
+              azurePowerShellVersion: LatestVersion

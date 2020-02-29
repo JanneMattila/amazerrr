@@ -5,6 +5,9 @@ Param (
     [Parameter(HelpMessage="Deployment target resource group location")] 
     [string] $Location = "North Europe",
 
+    [Parameter(HelpMessage="App root folder path to publish e.g. ..\src\AmazerrrWeb\wwwroot\")] 
+    [string] $AppRootFolder,
+
     [string] $Template = "$PSScriptRoot\azuredeploy.json",
     [string] $TemplateParameters = "$PSScriptRoot\azuredeploy.parameters.json"
 )
@@ -28,7 +31,7 @@ else
     $deploymentName = $env:RELEASE_RELEASENAME
 }
 
-if ((Get-AzResourceGroup -Name $ResourceGroupName -Location $Location -ErrorAction SilentlyContinue) -eq $null)
+if ($null -eq (Get-AzResourceGroup -Name $ResourceGroupName -Location $Location -ErrorAction SilentlyContinue))
 {
     Write-Warning "Resource group '$ResourceGroupName' doesn't exist and it will be created."
     New-AzResourceGroup -Name $ResourceGroupName -Location $Location -Verbose
@@ -47,9 +50,9 @@ $result = New-AzResourceGroupDeployment `
     -Mode Complete -Force `
     -Verbose
 
-if ($result.Outputs.webStorageName -eq $null -or
-    $result.Outputs.webAppName -eq $null -or
-    $result.Outputs.webAppUri -eq $null)
+if ($null -eq $result.Outputs.webStorageName -or
+    $null -eq $result.Outputs.webAppName -or
+    $null -eq $result.Outputs.webAppUri)
 {
     Throw "Template deployment didn't return web app information correctly and therefore deployment is cancelled."
 }
@@ -71,3 +74,11 @@ Write-Host "##vso[task.setvariable variable=Custom.WebStorageName;]$webStorageNa
 Write-Host "##vso[task.setvariable variable=Custom.WebStorageUri;]$webStorageUri"
 Write-Host "##vso[task.setvariable variable=Custom.WebAppName;]$webAppName"
 Write-Host "##vso[task.setvariable variable=Custom.WebAppUri;]$webAppUri"
+
+if (![string]::IsNullOrEmpty($AppRootFolder))
+{
+    .\deploy_web.ps1  `
+        -ResourceGroupName $ResourceGroupName  `
+        -WebStorageName $storageAccount.StorageAccountName  `
+        -AppRootFolder $AppRootFolder
+}
