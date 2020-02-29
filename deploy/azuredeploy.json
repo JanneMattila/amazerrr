@@ -85,7 +85,7 @@
       "name": "[variables('appStorageName')]",
       "type": "Microsoft.Storage/storageAccounts",
       "location": "[parameters('location')]",
-      "apiVersion": "2018-02-01",
+      "apiVersion": "2018-07-01",
       "sku": {
         "name": "[parameters('storageType')]"
       },
@@ -105,7 +105,17 @@
             }
           }
         }
-      }
+      },
+      "resources": [
+        {
+          "name": "default/puzzles",
+          "type": "blobServices/containers",
+          "apiVersion": "2018-07-01",
+          "dependsOn": [
+            "[variables('appStorageName')]"
+          ]
+        }
+      ]
     },
     {
       "name": "[variables('appServiceName')]",
