@@ -77,7 +77,7 @@ Write-Host "##vso[task.setvariable variable=Custom.WebAppUri;]$webAppUri"
 
 if (![string]::IsNullOrEmpty($AppRootFolder))
 {
-    .\deploy_web.ps1  `
+    $PSScriptRoot\deploy_web.ps1  `
         -ResourceGroupName $ResourceGroupName  `
         -WebStorageName $storageAccount.StorageAccountName  `
         -AppRootFolder $AppRootFolder
