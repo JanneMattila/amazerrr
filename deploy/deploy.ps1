@@ -87,6 +87,7 @@ if (![string]::IsNullOrEmpty($AppRootFolder))
 {
     . $PSScriptRoot\deploy_web.ps1 `
         -ResourceGroupName $ResourceGroupName `
+        -FunctionsUri $webAppUri `
         -WebStorageName $storageAccount.StorageAccountName `
         -AppRootFolder $AppRootFolder
 }

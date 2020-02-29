@@ -1,7 +1,10 @@
 Param (
     [Parameter(HelpMessage="Deployment target resource group")] 
     [string] $ResourceGroupName = "rg-amazerrr-local",
-
+    
+    [Parameter(HelpMessage="Azure Functions root uri")] 
+    [string] $FunctionsUri,
+    
     [Parameter(HelpMessage="Deployment target storage account name")] 
     [string] $WebStorageName,
 
@@ -36,23 +39,29 @@ function GetContentType([string] $extension)
     return "text/plain"
 }
 
+$AppRootFolder = (Resolve-Path $AppRootFolder).Path
 Write-Host "Processing folder: $AppRootFolder"
 
-if ($AppRootFolder.EndsWith("\") -eq $false)
-{
-    $AppRootFolder += "\"
-}
-
 $storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $WebStorageName
+
+$webStorageUri = $storageAccount.PrimaryEndpoints.Web
+Write-Host "Static website endpoint: $webStorageUri"
+
 Get-ChildItem -File -Recurse $AppRootFolder `
     | ForEach-Object  { 
         $name = $_.FullName.Replace($AppRootFolder,"")
         $contentType = GetContentType($_.Extension)
         $properties = @{"ContentType" = $contentType}
 
+        if (".html" -eq $_.Extension)
+        {
+            # Update the local development to match the deployed Azure Functions url
+            $localUri = "http://localhost:7071"
+            Get-Content $_.FullName | `
+                % { $_ -Replace $localUri, $FunctionsUri } | `
+                Set-Content $_.FullName
+        }
+
         Write-Host "Deploying file: $name"
         Set-AzStorageBlobContent -File $_.FullName -Blob $name -Container `$web -Context $storageAccount.Context -Properties $properties -Force
     }
-
-$webStorageUri = $storageAccount.PrimaryEndpoints.Web
-Write-Host "Static website endpoint: $webStorageUri"
