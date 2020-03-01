@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <style type="text/css">
         html,
-        body {
+        body,
+        input {
             padding-top: 0px;
             padding-bottom: 10px;
             padding-left: 20px;
@@ -42,6 +43,7 @@
                 })
                 .catch(error => {
                     console.log(error);
+                    solutionElement.innerHTML = "Oh no! Couldn't process the image 😥";
                 });
         }
     </script>
@@ -62,7 +64,8 @@
         <input type="file" id="puzzle" value="" />
     </p>
     <input type="button" value="Pick a file and solve it!" onclick="uploadFile();" />
-
+    <br />
+    <br />
     <div id="solution"></div>
 </body>
 </html>
