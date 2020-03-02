@@ -51,6 +51,7 @@ $result = New-AzResourceGroupDeployment `
     -Verbose
 
 if ($null -eq $result.Outputs.webStorageName -or
+    $null -eq $result.Outputs.webStorageName -or
     $null -eq $result.Outputs.webAppName -or
     $null -eq $result.Outputs.webAppUri)
 {
@@ -59,6 +60,7 @@ if ($null -eq $result.Outputs.webStorageName -or
 
 $result
 
+$appStorageName = $result.Outputs.appStorageName.value
 $webStorageName = $result.Outputs.webStorageName.value
 $webAppName = $result.Outputs.webAppName.value
 $webAppUri = $result.Outputs.webAppUri.value
@@ -70,6 +72,7 @@ Write-Host "Static website endpoint: $webStorageUri"
 
 # Create table to the storage if it does not exist
 $tableName = "puzzles"
+$storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $appStorageName
 if ($null -eq (Get-AzStorageTable -Context $storageAccount.Context -Name $tableName -ErrorAction SilentlyContinue))
 {
     Write-Warning "Table '$tableName' doesn't exist and it will be created."
