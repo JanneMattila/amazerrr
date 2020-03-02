@@ -9,6 +9,7 @@
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -17,5 +18,7 @@
         
         <Button x:Name="SolveButton" Content="Pick a file and solve it!" FontSize="24" Click="SolveButton_Click" />
         <TextBox Grid.Row="1" x:Name="Swipes" FontSize="24" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
+
+        <Image Grid.Column="1" Grid.RowSpan="2" x:Name="BoardImage" />
     </Grid>
 </Window>

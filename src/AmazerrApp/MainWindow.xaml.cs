@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Amazerrr;
 using Microsoft.Win32;
 
@@ -47,6 +50,8 @@ namespace AmazerrApp
                 }
 
                 Swipes.Text = sb.ToString();
+
+                BoardImage.Source = new BitmapImage(new Uri($"file://{openFileDialog.FileName}"));
             }
         }
     }
