@@ -20,12 +20,23 @@
     </style>
     <script>
         let endpoint = "http://localhost:7071";
-        let solverUrl = endpoint + "/api/Solver";
+        fetch("/configuration.json")
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                endpoint = data.endpoint;
+            })
+            .catch(error => {
+                console.log(error);
+                solutionElement.innerHTML = "Oh no! Couldn't fetch configuration settings 😥";
+            });
 
         function uploadFile() {
             const solutionElement = document.getElementById("solution");
             solutionElement.innerHTML = "Uploading & Solving...";
-            fetch(solverUrl,
+            fetch(endpoint + "/api/Solver",
                 {
                     method: "POST",
                     body: document.getElementById("puzzle").files[0]

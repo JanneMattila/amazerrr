@@ -47,20 +47,13 @@ $storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Ac
 $webStorageUri = $storageAccount.PrimaryEndpoints.Web
 Write-Host "Static website endpoint: $webStorageUri"
 
+"{ `"endpoint`": `"$FunctionsUri`" }" | Set-Content (Join-Path -Path $AppRootFolder -ChildPath configuration.json)
+
 Get-ChildItem -File -Recurse $AppRootFolder `
     | ForEach-Object  { 
         $name = $_.FullName.Replace($AppRootFolder,"")
         $contentType = GetContentType($_.Extension)
         $properties = @{"ContentType" = $contentType}
-
-        if (".html" -eq $_.Extension)
-        {
-            # Update the local development to match the deployed Azure Functions url
-            $localUri = "http://localhost:7071"
-            (Get-Content $_.FullName) | `
-                % { $_ -Replace $localUri, $FunctionsUri } | `
-                Set-Content $_.FullName
-        }
 
         Write-Host "Deploying file: $name"
         Set-AzStorageBlobContent -File $_.FullName -Blob $name -Container `$web -Context $storageAccount.Context -Properties $properties -Force
