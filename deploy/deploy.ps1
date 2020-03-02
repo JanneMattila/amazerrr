@@ -65,18 +65,18 @@ $webStorageName = $result.Outputs.webStorageName.value
 $webAppName = $result.Outputs.webAppName.value
 $webAppUri = $result.Outputs.webAppUri.value
 
-$storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $webStorageName
-Enable-AzStorageStaticWebsite -Context $storageAccount.Context -IndexDocument index.html -ErrorDocument404Path 404.html
-$webStorageUri = $storageAccount.PrimaryEndpoints.Web
+$webStorageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $webStorageName
+Enable-AzStorageStaticWebsite -Context $webStorageAccount.Context -IndexDocument index.html -ErrorDocument404Path 404.html
+$webStorageUri = $webStorageAccount.PrimaryEndpoints.Web
 Write-Host "Static website endpoint: $webStorageUri"
 
 # Create table to the storage if it does not exist
 $tableName = "puzzles"
-$storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $appStorageName
-if ($null -eq (Get-AzStorageTable -Context $storageAccount.Context -Name $tableName -ErrorAction SilentlyContinue))
+$appStorageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $appStorageName
+if ($null -eq (Get-AzStorageTable -Context $appStorageAccount.Context -Name $tableName -ErrorAction SilentlyContinue))
 {
     Write-Warning "Table '$tableName' doesn't exist and it will be created."
-    New-AzStorageTable -Context $storageAccount.Context -Name $tableName
+    New-AzStorageTable -Context $appStorageAccount.Context -Name $tableName
 }
 
 # Publish variable to the Azure DevOps agents so that they
@@ -91,6 +91,6 @@ if (![string]::IsNullOrEmpty($AppRootFolder))
     . $PSScriptRoot\deploy_web.ps1 `
         -ResourceGroupName $ResourceGroupName `
         -FunctionsUri $webAppUri `
-        -WebStorageName $storageAccount.StorageAccountName `
+        -WebStorageName $webStorageAccount.StorageAccountName `
         -AppRootFolder $AppRootFolder
 }
