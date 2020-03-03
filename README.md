@@ -7,3 +7,7 @@
 ![CI](https://github.com/JanneMattila/amazerrr/workflows/CI/badge.svg?branch=master)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Introduction
+
+Amazerrr is game solver trying to demonstrate the split for "business logic" code and cloud native component code.
