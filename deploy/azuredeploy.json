@@ -438,6 +438,10 @@
     "webAppUri": {
       "type": "string",
       "value": "[concat('https://',reference(resourceId('Microsoft.Web/sites', variables('appServiceName'))).hostNames[0])]"
+    },
+    "instrumentationKey": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsName')), '2015-05-01').InstrumentationKey]"
     }
   }
 }

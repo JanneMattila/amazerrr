@@ -4,7 +4,10 @@ Param (
     
     [Parameter(HelpMessage="Azure Functions root uri")] 
     [string] $FunctionsUri,
-    
+        
+    [Parameter(HelpMessage="App Insights Instrumentation Key")] 
+    [string] $IntrumentationKey,
+
     [Parameter(HelpMessage="Deployment target storage account name")] 
     [string] $WebStorageName,
 
@@ -47,7 +50,7 @@ $storageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Ac
 $webStorageUri = $storageAccount.PrimaryEndpoints.Web
 Write-Host "Static website endpoint: $webStorageUri"
 
-"{ `"endpoint`": `"$FunctionsUri`" }" | Set-Content (Join-Path -Path $AppRootFolder -ChildPath configuration.json)
+"{ `"endpoint`": `"$FunctionsUri`", `"instrumentationKey`": `"$IntrumentationKey`" }" | Set-Content (Join-Path -Path $AppRootFolder -ChildPath configuration.json)
 
 Get-ChildItem -File -Recurse $AppRootFolder `
     | ForEach-Object  { 

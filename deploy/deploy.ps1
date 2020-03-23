@@ -53,7 +53,8 @@ $result = New-AzResourceGroupDeployment `
 if ($null -eq $result.Outputs.webStorageName -or
     $null -eq $result.Outputs.webStorageName -or
     $null -eq $result.Outputs.webAppName -or
-    $null -eq $result.Outputs.webAppUri)
+    $null -eq $result.Outputs.webAppUri -or
+    $null -eq $result.Outputs.instrumentationKey)
 {
     Throw "Template deployment didn't return web app information correctly and therefore deployment is cancelled."
 }
@@ -64,6 +65,7 @@ $appStorageName = $result.Outputs.appStorageName.value
 $webStorageName = $result.Outputs.webStorageName.value
 $webAppName = $result.Outputs.webAppName.value
 $webAppUri = $result.Outputs.webAppUri.value
+$instrumentationKey = $result.Outputs.instrumentationKey.value
 
 $webStorageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $webStorageName
 Enable-AzStorageStaticWebsite -Context $webStorageAccount.Context -IndexDocument index.html -ErrorDocument404Path 404.html
@@ -91,6 +93,7 @@ if (![string]::IsNullOrEmpty($AppRootFolder))
     . $PSScriptRoot\deploy_web.ps1 `
         -ResourceGroupName $ResourceGroupName `
         -FunctionsUri $webAppUri `
+        -IntrumentationKey $instrumentationKey `
         -WebStorageName $webStorageAccount.StorageAccountName `
         -AppRootFolder $AppRootFolder
 }
