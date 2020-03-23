@@ -14,7 +14,8 @@ namespace AmazerrrFunc
         [return: Table("puzzles", Connection = "Storage")]
         public static SolutionOutput Run([BlobTrigger("puzzles/{name}", Connection = "Storage")]Stream imageBlob, string name, ILogger log)
         {
-            log.LogInformation($"C# Blob trigger function Processed blob\n Name:{name} \n Size: {imageBlob.Length} Bytes");
+            using var scope = log.BeginScope("Blob");
+            log.LogInformation("Blob function processing request for {Name} with {Size}.", name, imageBlob.Length);
 
             using var reader = new BinaryReader(imageBlob);
             var imageData = reader.ReadBytes((int)imageBlob.Length);

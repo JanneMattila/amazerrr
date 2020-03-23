@@ -15,16 +15,19 @@ namespace AmazerrrFunc
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            using var scope = log.BeginScope("Blob");
+            log.LogInformation("ImageAnalyzer function processing request.");
 
             if (!req.ContentLength.HasValue)
             {
+                log.LogWarning("Content-Length is required header.");
                 return new BadRequestObjectResult("Content-Length is required header.");
             }
 
             const int maxSize = 10_000_000;
             if (req.ContentLength.Value > maxSize)
             {
+                log.LogWarning("Too large content. Try with smaller image.");
                 return new BadRequestObjectResult("Too large content. Try with smaller image.");
             }
 

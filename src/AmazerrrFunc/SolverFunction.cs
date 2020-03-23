@@ -17,25 +17,30 @@ namespace AmazerrrFunc
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            using var scope = log.BeginScope("Solver");
+            log.LogInformation("Solver function processing request.");
 
             string input;
 
             if (req.ContentType.Contains("text/plain"))
             {
+                log.LogTrace("Content-type is text");
                 using var reader = new StreamReader(req.Body);
                 input = await reader.ReadToEndAsync();
             }
             else
             {
+                log.LogTrace("Content-type is assumed to be image");
                 if (!req.ContentLength.HasValue)
                 {
+                    log.LogWarning("Content-Length is required header.");
                     return new BadRequestObjectResult("Content-Length is required header.");
                 }
 
                 const int maxSize = 10_000_000;
                 if (req.ContentLength.Value > maxSize)
                 {
+                    log.LogWarning("Too large content. Try with smaller image.");
                     return new BadRequestObjectResult("Too large content. Try with smaller image.");
                 }
 
