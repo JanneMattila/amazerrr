@@ -19,6 +19,7 @@ namespace Amazerrr
         {
             _log = log;
         }
+
         public Board Parse(string input)
         {
             _log.LogInformation("Parsing started");

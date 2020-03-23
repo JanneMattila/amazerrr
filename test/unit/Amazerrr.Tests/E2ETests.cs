@@ -12,7 +12,7 @@ namespace Amazerrr.Tests
         public E2ETests()
         {
             _parser = new Parser(NullLogger.Instance);
-            _solver = new Solver();
+            _solver = new Solver(NullLogger.Instance);
         }
 
         [Fact]

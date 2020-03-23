@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace Amazerrr
 {
@@ -8,8 +9,17 @@ namespace Amazerrr
     {
         private int _minimumMoveCount = int.MaxValue;
 
+        private readonly ILogger _log;
+
+        public Solver(ILogger log)
+        {
+            _log = log;
+        }
+
         public List<Swipe> Solve(Board board)
         {
+            _log.LogInformation("Solving started");
+
             var recursionLevel = 1;
             var checkpoints = new List<SolveSnapshot>()
             {
@@ -44,11 +54,11 @@ namespace Amazerrr
 
                     if (begin > end)
                     {
-                        Console.WriteLine($"{recursionLevel}: Reduced calculation from {begin} to {end}.");
+                        _log.LogInformation("{RecursionLevel}: Optimized calculation from {Begin} to {End}.", recursionLevel, begin, end);
                     }
                     else
                     {
-                        Console.WriteLine($"{recursionLevel}: Calculating {begin}...");
+                        _log.LogInformation("{RecursionLevel}: Calculating {Begin}.", recursionLevel, begin);
                     }
                     recursionLevel++;
                     continue;
@@ -114,6 +124,8 @@ namespace Amazerrr
                     checkpoints.Add(newsolve);
                 }
             }
+
+            _log.LogInformation("Solving finished with {Moves} moves", solution.Count);
 
             return solution;
         }

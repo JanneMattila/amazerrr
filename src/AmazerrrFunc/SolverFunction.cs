@@ -49,7 +49,7 @@ namespace AmazerrrFunc
             var parser = new Parser(log);
             var board = parser.Parse(input);
 
-            var solver = new Solver();
+            var solver = new Solver(log);
             var output = solver.Solve(board);
 
             return new OkObjectResult(output.Select(o => o.ToString()));

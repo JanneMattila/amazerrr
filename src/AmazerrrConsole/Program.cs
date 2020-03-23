@@ -24,8 +24,8 @@ namespace AmazerrrConsole
 
                 var parser = new Parser(NullLogger.Instance);
                 var board = parser.Parse(input);
-
-                var solver = new Solver();
+                
+                var solver = new Solver(NullLogger.Instance);
                 var output = solver.Solve(board);
 
                 Console.WriteLine($"Solution in {output.Count} moves:");

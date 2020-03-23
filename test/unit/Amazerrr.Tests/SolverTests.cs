@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Amazerrr.Tests
@@ -9,7 +10,7 @@ namespace Amazerrr.Tests
 
         public SolverTests()
         {
-            _solver = new Solver();
+            _solver = new Solver(NullLogger.Instance);
         }
 
         [Fact]
