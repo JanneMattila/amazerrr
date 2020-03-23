@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Amazerrr.Tests
@@ -10,7 +11,7 @@ namespace Amazerrr.Tests
 
         public E2ETests()
         {
-            _parser = new Parser();
+            _parser = new Parser(NullLogger.Instance);
             _solver = new Solver();
         }
 

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 namespace Amazerrr
 {
@@ -15,8 +16,17 @@ namespace Amazerrr
         private List<ImagePosition> _board;
         private Rectangle _rectangle;
 
+        private readonly ILogger _log;
+
+        public ImageAnalyzer(ILogger log)
+        {
+            _log = log;
+        }
+
         public string Analyze(byte[] imageData)
         {
+            _log.LogInformation("Grid parsing started");
+
             _board = new List<ImagePosition>();
             using var memoryStream = new MemoryStream(imageData);
             using var bitmap = new Bitmap(memoryStream);
@@ -24,12 +34,13 @@ namespace Amazerrr
             var topX = bitmap.Width / 2;
             var topY = 0;
 
-            // Finding the inner board
+            _log.LogTrace("Finding the inner board");
             while (true)
             {
                 var c = GetPixel(bitmap, topX, topY);
                 if (!c.HasValue || c.Value.ToArgb() == BoardInnerColor)
                 {
+                    _log.LogTrace("Inner board found");
                     break;
                 }
                 topY++;
@@ -50,7 +61,7 @@ namespace Amazerrr
             return bitmap.GetPixel(x, y);
         }
 
-        private static (Rectangle, Color) FindRectangle(Bitmap bitmap, int x, int y)
+        private (Rectangle, Color) FindRectangle(Bitmap bitmap, int x, int y)
         {
             int leftX;
             int rightX;
@@ -58,7 +69,7 @@ namespace Amazerrr
             int topY;
             Color color = GetPixel(bitmap, x, y).GetValueOrDefault();
 
-            // Finding the top side of board square
+            _log.LogTrace("Finding the top side of board square");
             topY = y;
             while (true)
             {
@@ -70,7 +81,7 @@ namespace Amazerrr
                 topY--;
             }
 
-            // Finding the left side of board square
+            _log.LogTrace("Finding the left side of board square");
             leftX = x;
             while (true)
             {
@@ -82,7 +93,7 @@ namespace Amazerrr
                 leftX--;
             }
 
-            // Finding the right side of board square
+            _log.LogTrace("Finding the right side of board square");
             rightX = x;
             while (true)
             {
@@ -94,7 +105,7 @@ namespace Amazerrr
                 rightX++;
             }
 
-            // Finding the bottom side of board square
+            _log.LogTrace("Finding the bottom side of board square");
             bottomY = y;
             while (true)
             {
@@ -173,7 +184,10 @@ namespace Amazerrr
                 sb.Append(Constants.Wall);
             }
             sb.AppendLine();
-            return sb.ToString();
+            var grid = sb.ToString();
+            _log.LogInformation("Grid parsed {Grid}", grid);
+
+            return grid;
         }
 
         private void FindBoard(Bitmap bitmap, int pixelX, int pixelY, int boardX, int boardY)

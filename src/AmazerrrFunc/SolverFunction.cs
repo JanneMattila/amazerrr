@@ -42,11 +42,11 @@ namespace AmazerrrFunc
                 using var reader = new BinaryReader(req.Body);
                 var imageData = reader.ReadBytes((int)req.ContentLength.Value);
 
-                var imageAnalyzer = new ImageAnalyzer();
+                var imageAnalyzer = new ImageAnalyzer(log);
                 input = imageAnalyzer.Analyze(imageData);
             }
 
-            var parser = new Parser();
+            var parser = new Parser(log);
             var board = parser.Parse(input);
 
             var solver = new Solver();

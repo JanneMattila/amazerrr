@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Amazerrr;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace AmazerrrConsole
 {
@@ -14,14 +15,14 @@ namespace AmazerrrConsole
             {
                 var imageData = await File.ReadAllBytesAsync(args[0]);
 
-                var imageAnalyzer = new ImageAnalyzer();
+                var imageAnalyzer = new ImageAnalyzer(NullLogger.Instance);
                 var input = imageAnalyzer.Analyze(imageData);
 
                 Console.WriteLine("Board:");
                 Console.WriteLine(input);
                 Console.WriteLine();
 
-                var parser = new Parser();
+                var parser = new Parser(NullLogger.Instance);
                 var board = parser.Parse(input);
 
                 var solver = new Solver();

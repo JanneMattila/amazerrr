@@ -5,6 +5,8 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Amazerrr;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Win32;
 
 namespace AmazerrApp
@@ -29,15 +31,14 @@ namespace AmazerrApp
             {
                 var sb = new StringBuilder();
                 var imageData = await File.ReadAllBytesAsync(openFileDialog.FileName);
-                
-                var imageAnalyzer = new ImageAnalyzer();
+                var imageAnalyzer = new ImageAnalyzer(NullLogger.Instance);
                 var input = imageAnalyzer.Analyze(imageData);
 
                 sb.AppendLine("Board:");
                 sb.AppendLine(input);
                 sb.AppendLine();
 
-                var parser = new Parser();
+                var parser = new Parser(NullLogger.Instance);
                 var board = parser.Parse(input);
 
                 var solver = new Solver();

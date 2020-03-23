@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Amazerrr.Tests
@@ -9,7 +10,7 @@ namespace Amazerrr.Tests
 
         public ParserTests()
         {
-            _parser = new Parser();
+            _parser = new Parser(NullLogger.Instance);
         }
 
         [Fact]

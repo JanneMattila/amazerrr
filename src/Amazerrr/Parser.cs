@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace Amazerrr
 {
@@ -12,8 +13,16 @@ namespace Amazerrr
         private int _height;
         private int _width;
 
+        private readonly ILogger _log;
+
+        public Parser(ILogger log)
+        {
+            _log = log;
+        }
         public Board Parse(string input)
         {
+            _log.LogInformation("Parsing started");
+
             var lines = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
             (int x, int y) = FindPlayer(lines);
             _board.StartPosition = new Position(x, y);
@@ -24,6 +33,8 @@ namespace Amazerrr
             FindMoves(new Position(x, y), 0, 1, Swipe.Down);
 
             _board.TotalCount = _positions.Count;
+
+            _log.LogInformation("Parsing finished {TotalCount}", _board.TotalCount);
             return _board;
         }
 

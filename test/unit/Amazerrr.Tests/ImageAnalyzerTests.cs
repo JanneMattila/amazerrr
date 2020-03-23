@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using Xunit;
 
 namespace Amazerrr.Tests
 {
@@ -8,7 +9,7 @@ namespace Amazerrr.Tests
 
         public ImageAnalyzerTests()
         {
-            _imageAnalyzer = new ImageAnalyzer();
+            _imageAnalyzer = new ImageAnalyzer(NullLogger.Instance);
         }
 
         [Fact]

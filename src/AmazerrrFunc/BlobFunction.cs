@@ -19,10 +19,10 @@ namespace AmazerrrFunc
             using var reader = new BinaryReader(imageBlob);
             var imageData = reader.ReadBytes((int)imageBlob.Length);
 
-            var imageAnalyzer = new ImageAnalyzer();
+            var imageAnalyzer = new ImageAnalyzer(log);
             var input = imageAnalyzer.Analyze(imageData);
 
-            var parser = new Parser();
+            var parser = new Parser(log);
             var board = parser.Parse(input);
 
             var solver = new Solver();

@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using Amazerrr;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +31,7 @@ namespace AmazerrrFunc
             using var reader = new BinaryReader(req.Body);
             var imageData = reader.ReadBytes((int)req.ContentLength.Value);
 
-            var imageAnalyzer = new ImageAnalyzer();
+            var imageAnalyzer = new ImageAnalyzer(log);
             var output = imageAnalyzer.Analyze(imageData);
 
             return new OkObjectResult(output);
