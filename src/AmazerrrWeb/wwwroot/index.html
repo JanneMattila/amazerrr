@@ -32,7 +32,6 @@
                 return response.json();
             })
             .then(data => {
-                console.log(data);
                 endpoint = data.endpoint;
                 aisdk.config.instrumentationKey = data.instrumentationKey;
             })
