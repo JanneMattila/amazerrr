@@ -13,6 +13,12 @@
         "Premium_LRS"
       ]
     },
+    "cdn": {
+       "type": "string",
+       "metadata": {
+            "description": "CDN name (must be globally unique and map to custom domain name)"
+        }
+    },
     "customDomain": {
        "type": "string",
        "metadata": {
@@ -42,7 +48,6 @@
     "spaAppPing": "SPAPing",
     "backendPing": "BackendPing",
     "cdnName": "[concat('amazerrrcdn-', uniqueString(resourceGroup().id))]",
-    "cdnEndpointName": "[variables('appName')]",
     "cdnCustomDomainName": "amazerrrCustomDomain"
   },
   "resources": [
@@ -83,7 +88,7 @@
       "properties": {},
       "resources": [
         {
-          "name": "[variables('cdnEndpointName')]",
+          "name": "[parameters('cdn')]",
           "type": "endpoints",
           "apiVersion": "2019-04-15",
           "location": "[parameters('location')]",
@@ -92,7 +97,7 @@
             "[variables('webStorageName')]"
           ],
           "properties": {
-            "originHostHeader": "[variables('spaUri')]",
+            "originHostHeader": "[variables('spaHostname')]",
             "isHttpAllowed": false,
             "isHttpsAllowed": true,
             "queryStringCachingBehavior": "IgnoreQueryString",
@@ -186,7 +191,7 @@
               "type": "customdomains",
               "apiVersion": "2016-04-02",
               "dependsOn": [
-                  "[variables('cdnEndpointName')]"
+                  "[parameters('cdn')]"
               ],
               "properties": {
                   "hostName": "[parameters('customDomain')]"

@@ -4,7 +4,10 @@ Param (
 
     [Parameter(HelpMessage="Deployment target resource group location")] 
     [string] $Location = "North Europe",
-    
+        
+    [Parameter(HelpMessage="CDN name (must be globally unique and map to custom domain name)")] 
+    [string] $CDN = "amazerrr-local",
+
     [Parameter(Mandatory=$true, HelpMessage="Custom domain name for the CDN")] 
     [string] $CustomDomain,
 
@@ -42,6 +45,7 @@ if ($null -eq (Get-AzResourceGroup -Name $ResourceGroupName -Location $Location 
 
 # Additional parameters that we pass to the template deployment
 $additionalParameters = New-Object -TypeName hashtable
+$additionalParameters['cdn'] = $CDN
 $additionalParameters['customDomain'] = $CustomDomain
 
 $result = New-AzResourceGroupDeployment `
