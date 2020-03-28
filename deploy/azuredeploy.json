@@ -98,7 +98,7 @@
           ],
           "properties": {
             "originHostHeader": "[variables('spaHostname')]",
-            "isHttpAllowed": false,
+            "isHttpAllowed": true,
             "isHttpsAllowed": true,
             "queryStringCachingBehavior": "IgnoreQueryString",
             "contentTypesToCompress": [
