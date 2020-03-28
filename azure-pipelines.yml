@@ -74,3 +74,5 @@ stages:
   parameters:
     environtName: 'Dev'
     resourceGroupName: 'rg-amazerr-dev'
+    cdn: '$(CDN-Dev)'
+    customDomain: '$(CustomDomain-Dev)'
