@@ -80,7 +80,7 @@ $cdnCustomDomainName = $result.Outputs.cdnCustomDomainName.value
 
 # Enable CDN managed certificate to enable https on custom domain
 $cdnCustomDomain = Get-AzCdnCustomDomain -ResourceGroupName $ResourceGroupName -ProfileName $cdnName -EndpointName $cdn -CustomDomainName $cdnCustomDomainName
-if ("Disabled" -ne $cdnCustomDomain.CustomHttpsProvisioningState)
+if ("Disabled" -eq $cdnCustomDomain.CustomHttpsProvisioningState)
 {
     Enable-AzCdnCustomDomainHttps -ResourceGroupName $ResourceGroupName -ProfileName $cdnName -EndpointName $cdn -CustomDomainName $cdnCustomDomainName
 }

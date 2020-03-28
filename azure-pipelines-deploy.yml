@@ -11,7 +11,7 @@ stages:
   condition: succeeded()
   jobs:
   - deployment: Deploy
-    displayName: Deploy job
+    displayName: 'Deploy to ${{ parameters.environtName }}'
     pool:
       vmImage: windows-latest
     environment: ${{ parameters.environtName }}
