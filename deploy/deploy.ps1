@@ -63,7 +63,6 @@ if ($null -eq $result.Outputs.webStorageName -or
     $null -eq $result.Outputs.webAppUri -or
     $null -eq $result.Outputs.instrumentationKey -or
     $null -eq $result.Outputs.cdnName -or
-    $null -eq $result.Outputs.cdnEndpointHostName -or
     $null -eq $result.Outputs.cdnCustomDomainName)
 {
     Throw "Template deployment didn't return web app information correctly and therefore deployment is cancelled."
@@ -77,7 +76,6 @@ $webAppName = $result.Outputs.webAppName.value
 $webAppUri = $result.Outputs.webAppUri.value
 $instrumentationKey = $result.Outputs.instrumentationKey.value
 $cdnName = $result.Outputs.cdnName.value
-$cdnEndpointHostName = $result.Outputs.cdnEndpointHostName.value
 $cdnCustomDomainName = $result.Outputs.cdnCustomDomainName.value
 
 # Enable CDN managed certificate to enable https on custom domain

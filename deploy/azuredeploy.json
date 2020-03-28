@@ -577,10 +577,6 @@
       "type": "string",
       "value": "[variables('cdnName')]"
     },
-    "cdnEndpointHostName": {
-      "type": "string",
-      "value": "[reference(parameters('cdn')).hostName]"
-    },
     "cdnCustomDomainName": {
        "type": "string",
        "value": "[variables('cdnCustomDomainName')]"
