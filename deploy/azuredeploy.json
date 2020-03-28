@@ -30,7 +30,8 @@
   "variables": {
     "appName": "amazerrr",
     "webStorageName": "[concat('amzrweb', uniqueString(resourceGroup().id))]",
-    "spaUri": "[concat('https://',variables('webStorageName'),'.z16.web.core.windows.net')]",
+    "spaHostname": "[concat(variables('webStorageName'),'.z16.web.core.windows.net')]",
+    "spaUri": "[concat('https://',variables('spaHostname'))]",
     "appInsightsName": "[concat('ai-',variables('appName'))]",
     "appStorageName": "[concat('amzr', uniqueString(resourceGroup().id))]",
     "appServiceName": "[concat('azfun-',variables('appName'),'-',uniqueString(resourceGroup().id))]",
@@ -143,7 +144,7 @@
               {
                 "name": "spaOrigin",
                 "properties": {
-                  "hostName": "[variables('spaUri')]"
+                  "hostName": "[variables('spaHostname')]"
                 }
               }
             ],
