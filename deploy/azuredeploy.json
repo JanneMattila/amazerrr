@@ -572,6 +572,18 @@
     "instrumentationKey": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsName')), '2015-05-01').InstrumentationKey]"
+    },
+    "cdnName": {
+      "type": "string",
+      "value": "[variables('cdnName')]"
+    },
+    "cdnEndpointHostName": {
+      "type": "string",
+      "value": "[reference(parameters('cdn')).hostName]"
+    },
+    "cdnCustomDomainName": {
+       "type": "string",
+       "value": "[variables('cdnCustomDomainName')]"
     }
   }
 }
