@@ -79,7 +79,11 @@ $cdnName = $result.Outputs.cdnName.value
 $cdnCustomDomainName = $result.Outputs.cdnCustomDomainName.value
 
 # Enable CDN managed certificate to enable https on custom domain
-Enable-AzCdnCustomDomainHttps -ResourceGroupName $ResourceGroupName -ProfileName $cdnName -EndpointName $cdn -CustomDomainName $cdnCustomDomainName
+$cdnCustomDomain = Get-AzCdnCustomDomain -ResourceGroupName $ResourceGroupName -ProfileName $cdnName -EndpointName $cdn -CustomDomainName $cdnCustomDomainName
+if ("Disabled" -ne $cdnCustomDomain.CustomHttpsProvisioningState)
+{
+    Enable-AzCdnCustomDomainHttps -ResourceGroupName $ResourceGroupName -ProfileName $cdnName -EndpointName $cdn -CustomDomainName $cdnCustomDomainName
+}
 
 $webStorageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $webStorageName
 Enable-AzStorageStaticWebsite -Context $webStorageAccount.Context -IndexDocument index.html -ErrorDocument404Path 404.html
