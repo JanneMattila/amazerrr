@@ -4,6 +4,9 @@ Param (
 
     [Parameter(HelpMessage="Deployment target resource group location")] 
     [string] $Location = "North Europe",
+    
+    [Parameter(HelpMessage="Custom domain name for the CDN")] 
+    [string] $CustomDomain,
 
     [Parameter(HelpMessage="App root folder path to publish e.g. ..\src\AmazerrrWeb\wwwroot\")] 
     [string] $AppRootFolder,
@@ -39,7 +42,7 @@ if ($null -eq (Get-AzResourceGroup -Name $ResourceGroupName -Location $Location 
 
 # Additional parameters that we pass to the template deployment
 $additionalParameters = New-Object -TypeName hashtable
-#$additionalParameters['name'] = $value
+$additionalParameters['customDomain'] = $CustomDomain
 
 $result = New-AzResourceGroupDeployment `
     -DeploymentName $deploymentName `
