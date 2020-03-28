@@ -5,7 +5,7 @@ Param (
     [Parameter(HelpMessage="Deployment target resource group location")] 
     [string] $Location = "North Europe",
     
-    [Parameter(HelpMessage="Custom domain name for the CDN")] 
+    [Parameter(Mandatory=$true, HelpMessage="Custom domain name for the CDN")] 
     [string] $CustomDomain,
 
     [Parameter(HelpMessage="App root folder path to publish e.g. ..\src\AmazerrrWeb\wwwroot\")] 

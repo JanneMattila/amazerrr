@@ -40,8 +40,8 @@
     "appHighUsageAlertName": "[concat(variables('appName'), 'HighUsageAlert')]",
     "spaAppPing": "SPAPing",
     "backendPing": "BackendPing",
-    "cdnName": "[concat('cdn-',variables('appName'))]",
-    "cdnEndpointName": "[concat('cdn-endpoint-',variables('appName'))]"
+    "cdnName": "[concat('amazerrrcdn-', uniqueString(resourceGroup().id))]",
+    "cdnEndpointName": "[variables('appName')]"
   },
   "resources": [
     {
