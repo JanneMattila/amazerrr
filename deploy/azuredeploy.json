@@ -177,7 +177,8 @@
                         "parameters": {
                           "@odata.type": "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlRedirectActionParameters",
                           "redirectType": "Found",
-                          "destinationProtocol": "Https"
+                          "destinationProtocol": "Https",
+                          "customHostname": "[parameters('customDomain')]"
                         }
                       }
                     ]
