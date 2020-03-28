@@ -76,3 +76,12 @@ stages:
     resourceGroupName: 'rg-amazerr-dev'
     cdn: '$(CDN-Dev)'
     customDomain: '$(CustomDomain-Dev)'
+
+- template: azure-pipelines-deploy.yml
+  dependsOn: Dev
+  condition: succeeded()
+  parameters:
+    environtName: 'Prod'
+    resourceGroupName: 'rg-amazerr-prod'
+    cdn: '$(CDN-Prod)'
+    customDomain: '$(CustomDomain-Prod)'
