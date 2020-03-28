@@ -41,7 +41,8 @@
     "spaAppPing": "SPAPing",
     "backendPing": "BackendPing",
     "cdnName": "[concat('amazerrrcdn-', uniqueString(resourceGroup().id))]",
-    "cdnEndpointName": "[variables('appName')]"
+    "cdnEndpointName": "[variables('appName')]",
+    "cdnCustomDomainName": "amazerrrCustomDomain"
   },
   "resources": [
     {
@@ -180,7 +181,7 @@
           },
           "resources": [
             {
-              "name": "[variables('cdnEndpointName')]",
+              "name": "[variables('cdnCustomDomainName')]",
               "type": "customdomains",
               "apiVersion": "2016-04-02",
               "dependsOn": [
