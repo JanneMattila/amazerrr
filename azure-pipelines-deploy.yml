@@ -55,13 +55,14 @@ stages:
               DeploymentType: runFromZip
 
           - task: VSTest@2
-            displayName: 'VsTest - releasetests'
+            displayName: 'Execute Release Tests'
             inputs:
               testAssemblyVer2: |
                **\Amazerrr.ReleaseTests.dll
                !**\*TestAdapter.dll
                !**\obj\**
+              searchFolder: '$(System.DefaultWorkingDirectory)\releasetests'
+              runSettingsFile: '$(System.DefaultWorkingDirectory)\releasetests\app.runsettings'
               uiTests: true
-              runSettingsFile: '$(System.DefaultWorkingDirectory)/releasetests/app.runsettings'
               overrideTestrunParameters: '-baseUrl $(Custom.WebAppUri)'
               rerunFailedTests: false
