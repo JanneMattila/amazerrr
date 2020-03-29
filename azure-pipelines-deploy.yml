@@ -62,6 +62,7 @@ stages:
 
           - task: VSTest@2
             displayName: 'Execute Release Tests'
+            continueOnError: true
             inputs:
               testAssemblyVer2: |
                **\Amazerrr.ReleaseTests.dll
