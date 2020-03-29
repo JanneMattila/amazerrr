@@ -5,6 +5,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace Amazerrr.ReleaseTests
 {
+    [TestClass]
     public class BrowserTests
     {
         private IWebDriver _driver;
@@ -23,7 +24,7 @@ namespace Amazerrr.ReleaseTests
 
         [TestMethod]
         [TestCategory("Release")]
-        public void Home_Index_Route()
+        public void Front_Page_Test()
         {
             // Arrange
             var expectedTitleContains = "Amazerrr";

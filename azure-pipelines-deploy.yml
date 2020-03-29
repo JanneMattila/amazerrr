@@ -36,7 +36,7 @@ stages:
             inputs:
               artifactName: web
               downloadPath: '$(System.DefaultWorkingDirectory)'
-          
+
           - task: AzurePowerShell@4
             displayName: 'Azure PowerShell script: FilePath'
             inputs:
@@ -44,7 +44,7 @@ stages:
               ScriptPath: '$(System.DefaultWorkingDirectory)/deploy/deploy.ps1'
               ScriptArguments: '-ResourceGroupName ${{ parameters.resourceGroupName }} -CDN ${{ parameters.cdn }} -CustomDomain ${{ parameters.customDomain }} -AppRootFolder "$(System.DefaultWorkingDirectory)/web/"'
               azurePowerShellVersion: LatestVersion
-          
+
           - task: AzureRmWebAppDeployment@4
             displayName: 'Deploy Azure Functions App'
             inputs:
@@ -53,3 +53,15 @@ stages:
               WebAppName: '$(Custom.WebAppName)'
               enableCustomDeployment: true
               DeploymentType: runFromZip
+
+          - task: VSTest@2
+            displayName: 'VsTest - releasetests'
+            inputs:
+              testAssemblyVer2: |
+               **\Amazerrr.ReleaseTests.dll
+               !**\*TestAdapter.dll
+               !**\obj\**
+              uiTests: true
+              runSettingsFile: '$(System.DefaultWorkingDirectory)/releasetests/app.runsettings'
+              overrideTestrunParameters: '-baseUrl $(Custom.WebAppUri)'
+              rerunFailedTests: false

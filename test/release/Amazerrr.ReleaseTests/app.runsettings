@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <MaxCpuCount>1</MaxCpuCount>
+  </RunConfiguration>
+
+  <TestRunParameters>
+    <Parameter name="baseUrl" value="https://localhost:44334/" />
+  </TestRunParameters>
+
+</RunSettings>

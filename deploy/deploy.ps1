@@ -104,7 +104,7 @@ if ($null -eq (Get-AzStorageTable -Context $appStorageAccount.Context -Name $tab
 Write-Host "##vso[task.setvariable variable=Custom.WebStorageName;]$webStorageName"
 Write-Host "##vso[task.setvariable variable=Custom.WebStorageUri;]$webStorageUri"
 Write-Host "##vso[task.setvariable variable=Custom.WebAppName;]$webAppName"
-Write-Host "##vso[task.setvariable variable=Custom.WebAppUri;]$webAppUri"
+Write-Host "##vso[task.setvariable variable=Custom.WebAppUri;]https://$CustomDomain"
 
 if (![string]::IsNullOrEmpty($AppRootFolder))
 {

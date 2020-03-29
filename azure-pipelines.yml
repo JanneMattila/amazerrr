@@ -70,6 +70,23 @@ stages:
         PathtoPublish: deploy
         ArtifactName: deploy
 
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(build.artifactstagingdirectory)/releasetests'
+      inputs:
+        SourceFolder: test/release/Amazerrr.ReleaseTests/bin/Release
+        Contents: |
+         *.dll
+         *.runsettings
+         *.pdb
+         *.xml
+        TargetFolder: '$(build.artifactstagingdirectory)/releasetests'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: releasetests'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)/releasetests'
+        ArtifactName: releasetests
+
 - template: azure-pipelines-deploy.yml
   parameters:
     environtName: 'Dev'
