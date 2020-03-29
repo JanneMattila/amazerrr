@@ -54,6 +54,12 @@ stages:
               enableCustomDeployment: true
               DeploymentType: runFromZip
 
+          - task: DownloadBuildArtifacts@0
+            displayName: 'Download Build Artifacts: releasetests'
+            inputs:
+              artifactName: releasetests
+              downloadPath: '$(System.DefaultWorkingDirectory)'
+
           - task: VSTest@2
             displayName: 'Execute Release Tests'
             inputs:
