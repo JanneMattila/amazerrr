@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Edge;
 
 namespace Amazerrr.ReleaseTests
 {
@@ -16,9 +16,12 @@ namespace Amazerrr.ReleaseTests
         [TestInitialize]
         public void TestInitialize()
         {
-            var chromeOptions = new ChromeOptions();
-            var azureDevOpsBinaryLocation = Environment.GetEnvironmentVariable("ChromeWebDriver") ?? ".";
-            _driver = new ChromeDriver(azureDevOpsBinaryLocation, chromeOptions, TimeSpan.FromMinutes(3));
+            var options = new EdgeOptions
+            {
+                PageLoadStrategy = PageLoadStrategy.Normal
+            };
+            var azureDevOpsBinaryLocation = Environment.GetEnvironmentVariable("EdgeWebDriver") ?? ".";
+            _driver = new EdgeDriver(azureDevOpsBinaryLocation, options, TimeSpan.FromMinutes(3));
             _baseUrl = TestContext.Properties["baseUrl"].ToString();
         }
 
