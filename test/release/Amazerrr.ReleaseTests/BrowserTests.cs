@@ -60,12 +60,12 @@ namespace Amazerrr.ReleaseTests
             var solutionElement = _driver.FindElement(By.Id("solution"));
 
             // Wait solver to solve the puzzle
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 60; i++)
             {
                 if (solutionElement.Text.Length == 0||
                     solutionElement.Text == "Uploading & Solving...")
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(1000);
                     continue;
                 }
                 break;
