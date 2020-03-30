@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -42,6 +44,42 @@ namespace Amazerrr.ReleaseTests
             // Assert
             Assert.IsNotNull(actualTitle);
             Assert.IsTrue(actualTitle.Contains(expectedTitleContains));
+        }
+
+
+        [TestMethod]
+        [TestCategory("Release")]
+        public void Solve_Test()
+        {
+            // Arrange
+            var expected = "Solution in 3 moves:\r\nRight\r\nUp\r\nLeft";
+            var image = $"{AppDomain.CurrentDomain.BaseDirectory}\\Test1.png";
+            _driver.Navigate().GoToUrl($"{_baseUrl}");
+            _driver.FindElement(By.Id("puzzle")).SendKeys(image);
+            _driver.FindElement(By.Id("solveButton")).Click();
+            var solutionElement = _driver.FindElement(By.Id("solution"));
+
+            // Wait solver to solve the puzzle
+            for (int i = 0; i < 30; i++)
+            {
+                if (solutionElement.Text.Length == 0||
+                    solutionElement.Text == "Uploading & Solving...")
+                {
+                    Thread.Sleep(500);
+                    continue;
+                }
+                break;
+            }
+
+            // Act
+            var actual = solutionElement.Text;
+
+            // Collect data
+            TakeImage();
+
+            // Assert
+            Assert.IsNotNull(actual);
+            Assert.AreEqual(expected, actual);
         }
 
         private void TakeImage()
