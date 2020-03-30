@@ -79,6 +79,7 @@ stages:
          *.runsettings
          *.pdb
          *.xml
+         *.png
         TargetFolder: '$(build.artifactstagingdirectory)\releasetests'
 
     - task: PublishBuildArtifacts@1
