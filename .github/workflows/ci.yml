@@ -1,16 +1,16 @@
-name: CI
+#name: CI
 
-on: [push]
+#on: [push]
 
-jobs:
-  build:
+#jobs:
+#  build:
 
-    runs-on: windows-latest
+#    runs-on: windows-latest
 
-    steps:
-    - uses: actions/checkout@v2
+#    steps:
+#    - uses: actions/checkout@v2
           
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+#    - name: Add msbuild to PATH
+#      uses: microsoft/setup-msbuild@v1.0.2
 
-    - run: msbuild -p:Configuration=Release -restore -m
+#    - run: msbuild -p:Configuration=Release -restore -m
