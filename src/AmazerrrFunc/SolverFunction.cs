@@ -22,7 +22,8 @@ namespace AmazerrrFunc
 
             string input;
 
-            if (req.ContentType.Contains("text/plain"))
+            if (req.ContentType == null ||
+                req.ContentType.Contains("text/plain"))
             {
                 log.LogTrace("Content-type is text");
                 using var reader = new StreamReader(req.Body);
